@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
+import { weatherRequest } from "./modules/API";
+import dayjs from "dayjs";
 
-function App() {
+import Home from '../src/Views/Home';
+import Favorites from '../src/Views/Favorites';
+
+export const apiKey = "23835421f51d272a90553849c92a284e";
+
+export default function App() {
+  const today = dayjs().format("DD/MM/YYYY");
+
+  console.log(weatherRequest("Paris"));
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+    <div>
+
+      <BrowserRouter>
+
+        <nav>
+          <Link to="/">Home | </Link>
+          <Link to="/favorites">Favorites | </Link>
+        </nav>
+
+        <Switch>
+
+          <Route exact path="/" component={Home} />
+          <Route exact path="/favorites" component={Favorites} />
+
+        </Switch>
+
+        <footer>
+          <div>
+            <p>developed by Nicolas Maillols</p>
+            <p>{today}</p>
+          </div>
+        </footer>
+
+      </BrowserRouter>
+
+    </div>
+
+  )
+}
