@@ -1,10 +1,16 @@
 import { weatherRequest } from "../Modules/api";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext, createContext } from "react";
+import { FavoritesContext } from "../App";
+
+export const WeatherContext = createContext()
 
 export default function Home() {
-    const [cityName, setCityName] = useState("")
-    const [temperature, setTemperature] = useState(null)
-    const [weather, setWeather] = useState("")
+
+    const favState = useContext(FavoritesContext);
+
+    const [cityName, setCityName] = useState("");
+    const [temperature, setTemperature] = useState(null);
+    const [weather, setWeather] = useState("");
 
     const handleChange = (e) => {
         setCityName(e.target.value);
@@ -23,7 +29,8 @@ export default function Home() {
     }
 
     const addFavorites = () => {
-        
+        favState.favorites.push(cityName)
+        console.log(favState.favorites);
     }
 
     return (

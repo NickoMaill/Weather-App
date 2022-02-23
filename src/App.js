@@ -5,35 +5,45 @@ import dayjs from "dayjs";
 import Home from '../src/Views/Home';
 import Favorites from '../src/Views/Favorites';
 
-export const apiKey = "23835421f51d272a90553849c92a284e";
+export const FavoritesContext = createContext()
 
 export default function App() {
   const today = dayjs().format("DD/MM/YYYY");
+  const [favorites, setFavorites] = useState([]);
+
+  const value = {
+    favorites: favorites,
+    setFavorites: setFavorites,
+  }
 
   return (
 
-        <BrowserRouter>
+    <FavoritesContext.Provider value={value}>
 
-          <nav>
-            <Link to="/">Home | </Link>
-            <Link to="/favorites">Favorites | </Link>
-          </nav>
+      <BrowserRouter>
 
-          <Switch>
+        <nav>
+          <Link to="/">Home | </Link>
+          <Link to="/favorites">Favorites | </Link>
+        </nav>
 
-            <Route exact path="/" component={Home} />
-            <Route exact path="/favorites" component={Favorites} />
+        <Switch>
 
-          </Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/favorites" component={Favorites} />
 
-          <footer>
-            <div>
-              <p>developed by Nicolas Maillols</p>
-              <p>{today}</p>
-            </div>
-          </footer>
+        </Switch>
 
-        </BrowserRouter>
+        <footer>
+          <div>
+            <p>developed by Nicolas Maillols</p>
+            <p>{today}</p>
+          </div>
+        </footer>
+
+      </BrowserRouter>
+
+    </FavoritesContext.Provider>
 
   )
 }

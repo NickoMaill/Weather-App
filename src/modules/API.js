@@ -1,5 +1,3 @@
-// import { apiKey } from '../App'
-
 export const weatherRequest = async (cityName) => {
 	const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${process.env.REACT_APP_APIKEY}`;
 	const result = await fetch(url);
