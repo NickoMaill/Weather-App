@@ -1,31 +1,14 @@
-import { apiKey } from '../App'
+// import { apiKey } from '../App'
 
-export const weatherRequest = (cityName) => {
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`
+export const weatherRequest = async (cityName) => {
+	const url = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${process.env.REACT_APP_APIKEY}`;
+	const result = await fetch(url);
+	const res = await result.json();
+	return await detailsWeather(res[0].lat, res[0].lon);
+};
 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            detailsWeather(data[0].lat, data[0].lon)
-        })
-        .catch((err) => {
-            console.error("Error while charging adress", err);
-        })
-
-    const detailsWeather = (lat, lon) => {
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
-
-        fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                console.log("dataFetch",data);
-                return data
-
-
-            })
-            .catch((err) => {
-                console.error("Error while charging weather...", err);
-            })
-
-    }
-}
+const detailsWeather = async (lat, lon) => {
+	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=fr&appid=${process.env.REACT_APP_APIKEY}`;
+	const result = await fetch(url);
+	return await result.json();
+};
