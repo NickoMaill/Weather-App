@@ -7,7 +7,18 @@ export const weatherRequest = (cityName) => {
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            console.log("data", data[0].lat, data[0].lon);
+            detailsWeather(data[0].lat, data[0].lon)
         })
 
+        const detailsWeather = (lat, lon) => {
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
+        
+            fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+        
+            })
+        
+        }
 }

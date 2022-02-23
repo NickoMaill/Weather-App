@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
-import { weatherRequest } from "./modules/API";
+import { weatherRequest } from "./Modules/API";
 import dayjs from "dayjs";
 
 import Home from '../src/Views/Home';
@@ -11,7 +11,7 @@ export const apiKey = "23835421f51d272a90553849c92a284e";
 export default function App() {
   const today = dayjs().format("DD/MM/YYYY");
 
-  console.log(weatherRequest("Paris"));
+  console.log(weatherRequest("douala"));
 
 
   return (
