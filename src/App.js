@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, createContext, useState } from "react";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
-import { weatherRequest } from "./Modules/API";
 import dayjs from "dayjs";
 
 import Home from '../src/Views/Home';
@@ -11,37 +10,30 @@ export const apiKey = "23835421f51d272a90553849c92a284e";
 export default function App() {
   const today = dayjs().format("DD/MM/YYYY");
 
-  console.log(weatherRequest("douala"));
-
-
   return (
 
-    <div>
+        <BrowserRouter>
 
-      <BrowserRouter>
+          <nav>
+            <Link to="/">Home | </Link>
+            <Link to="/favorites">Favorites | </Link>
+          </nav>
 
-        <nav>
-          <Link to="/">Home | </Link>
-          <Link to="/favorites">Favorites | </Link>
-        </nav>
+          <Switch>
 
-        <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/favorites" component={Favorites} />
 
-          <Route exact path="/" component={Home} />
-          <Route exact path="/favorites" component={Favorites} />
+          </Switch>
 
-        </Switch>
+          <footer>
+            <div>
+              <p>developed by Nicolas Maillols</p>
+              <p>{today}</p>
+            </div>
+          </footer>
 
-        <footer>
-          <div>
-            <p>developed by Nicolas Maillols</p>
-            <p>{today}</p>
-          </div>
-        </footer>
-
-      </BrowserRouter>
-
-    </div>
+        </BrowserRouter>
 
   )
 }
