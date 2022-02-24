@@ -8,9 +8,9 @@ export const FavArrayContext = createContext()
 
 export default function Favorites() {
     const favState = useContext(FavoritesContext);
-    let provArray = []
 
     const [favArray, setFavArray] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false)
 
     const value = {
         favArray: favArray
@@ -19,10 +19,17 @@ export default function Favorites() {
     useEffect(() => {
         favState.favorites.forEach(async (city) => {
             const res = await weatherRequest(city)
-            provArray.push(res)
-            // console.log("test", provArray);
+            favArray.push(res)
+            setIsLoaded(true);
+            // console.log("test",);
         });
     })
+
+    if (isLoaded !== true) {
+        return(
+            <h1>Favorites</h1>
+        )
+    }
 
     return (
         <FavArrayContext.Provider value={value}>
@@ -33,14 +40,16 @@ export default function Favorites() {
 
                     <ul>
 
-                        {provArray.map((city, i) => {
-                            if (i === 0 || i <= provArray.length) {
-                                console.log("favArray", i);
-                                favArray.push(city)
+                        {favArray.map((city, i) => {
+                            if (i === 0) {
+                                // console.log("favArray", city);
 
                                 return (
-                                    <li>
-                                        <CityCard key={i} />
+                                    <li key={i}>
+                                        <CityCard
+                                            name={city.name} 
+                                            temp={city.main.temp}
+                                            description={city.weather[0].description}/>
                                     </li>
                                 )
                             }
