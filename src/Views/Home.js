@@ -4,10 +4,13 @@ import { weatherRequest } from "../modules/API";
 import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
 
+
 //COMPONENTS IMPORT
 
 import WeatherCard from "../Components/WeatherCard";
 
+//STYLE IMPORT
+import "../Styles/Home.css"
 //CREATE CONTEXT
 
 export const WeatherContext = createContext()
@@ -33,12 +36,12 @@ export default function Home() {
 
     //function on page load
 
-    useEffect(async () => {
-        const res = await weatherRequest("Paris")
-        setWeatherDetails(res);
-        setIsLoaded(true);
-        console.log(weatherDetails);
-    }, [])
+    // useEffect(async () => {
+    //     const res = await weatherRequest("paris")
+    //     setWeatherDetails(res);
+    //     setIsLoaded(true);
+    //     console.log(weatherDetails);
+    // }, [])
 
     //function for listen input
 
@@ -49,9 +52,15 @@ export default function Home() {
     //function for launch weatherRequest() (function locate in API.js)
 
     const handleClick = async () => {
-        const res = await weatherRequest(inputValue);
-        setWeatherDetails(res)
-        console.log("resHandle", weatherDetails);
+        if (inputValue === "") {
+            console.error("oups");
+            return true
+        } else {
+            const res = await weatherRequest(inputValue);
+            setWeatherDetails(res)
+            setIsLoaded(true);
+            console.log("resHandle", weatherDetails);
+        }
     }
 
     // function for adding a favorite in Favorites view
@@ -61,18 +70,23 @@ export default function Home() {
         if (idVerify.includes(weatherDetails.id)) {
             console.warn("already added");
             return true
+
+        } else if (favState.favorites.length === 3) {
+            console.warn("limité a 3 favoris")
+            return true
+
+        } else if (inputValue === "") {
+            console.warn("chercher d'abord une ville avant de l'ajouter a vos favoris");
+            return true
+
         } else {
-            idVerify.push(weatherDetails.id)
-            favState.favorites.push(weatherDetails)
+
+            setIdVerify(prevId => [...prevId, weatherDetails.id])
+            favState.setFavorites(prevData => [...prevData, weatherDetails])
             console.info("ajouté!");
             console.log("arrayFav", favState.favorites);
             console.log("idArray", idVerify);
-
         }
-
-        // if (favState.favorites.includes(weatherDetails.name)) {
-        //     console.warn("already added");
-        //     return true
     }
 
     //Guard on page load
@@ -83,9 +97,9 @@ export default function Home() {
 
                 <h1>Home</h1>
 
-                <input type="text" onChange={handleChange} />
-                <button onClick={handleClick}>Rechercher</button>
-                <button onClick={addFavorite}> Ajouter aux favoris </button>
+                <input className="input-search" placeholder="&#128269;  recherche" type="text" onChange={handleChange} />
+                <button className="btn search-btn" onClick={handleClick}>Rechercher</button>
+                <button className="btn fav-btn" onClick={addFavorite}> Ajouter aux favoris </button>
 
             </div>
         )
@@ -100,9 +114,9 @@ export default function Home() {
 
                 <h1>Home</h1>
 
-                <input type="text" onChange={handleChange} />
-                <button onClick={handleClick}>Rechercher</button>
-                <button onClick={addFavorite}> Ajouter aux favoris </button>
+                <input className="input-search" placeholder="&#128269;  recherche" type="text" onChange={handleChange} />
+                <button className="btn search-btn" onClick={handleClick}>Rechercher</button>
+                <button className="btn fav-btn" onClick={addFavorite}> Ajouter aux favoris </button>
                 <WeatherCard />
 
             </div>

@@ -1,11 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { weatherRequest } from "../modules/API";
+import { useContext } from "react";
 import { FavoritesContext } from "../App";
 import CityCard from "../Components/CityCard";
+import "../Styles/Favorites.css"
 
 export default function Favorites() {
-    
+
     const favState = useContext(FavoritesContext);
+
+    // const deleteFavorite = (e) => {
+
+    //     favState.setFavorites(favState.favorites.filter( => favState.favorites[0] !== id ))
+    // }
 
     return (
 
@@ -14,11 +19,11 @@ export default function Favorites() {
 
             <div className="fav-container">
 
+                <div className="center-div">
+
                 {favState.favorites.map((cityMap, i) => {
                     if (i === 0 || i <= favState.favorites.length) {
-                        console.log(i);
-                    
-                    return (
+                        return (
 
                             <CityCard
                                 key={i}
@@ -27,13 +32,17 @@ export default function Favorites() {
                                 description={cityMap.weather[0].description}
                                 src={`http://openweathermap.org/img/wn/${cityMap.weather[0].icon}@2x.png`}
                                 alt={cityMap.weather[0].description}
-                                title={cityMap.weather[0].description} />
+                                title={cityMap.weather[0].description}
+                                value={i}
+                                />
 
                         )
 
                     }
 
                 })}
+                </div>
+
 
             </div>
 

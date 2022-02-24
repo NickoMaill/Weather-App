@@ -1,0 +1,15 @@
+.btn {
+  background-color: #3992ff;
+  border: solid 2px #3992ff;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: #fff;
+  margin: 1rem;
+}
+
+.input-search {
+  padding: 0.3rem;
+  border-radius: 1rem;
+  width: 20%;
+}
+/*# sourceMappingURL=Home.css.map */
