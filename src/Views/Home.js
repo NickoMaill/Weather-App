@@ -14,7 +14,6 @@ export default function Home() {
 
     const handleChange = (e) => {
         setCityName(e.target.value);
-        console.log(cityName);
     }
 
     const handleClick = async () => {
@@ -22,15 +21,23 @@ export default function Home() {
         setCityName(res.name)
         setTemperature(res.main.temp)
         setWeather(res.weather[0].description)
-        console.log("resHandle",res);
-        console.log("City",cityName);
-        console.log("temperature",temperature);
-        console.log("weather",weather);
+        console.log("resHandle", res);
+        console.log("City", cityName);
+        console.log("temperature", temperature);
+        console.log("weather", weather);
     }
 
     const addFavorites = () => {
-        favState.favorites.push(cityName)
-        console.log(favState.favorites);
+
+        if (favState.favorites.includes(cityName)) {
+            console.warn("already added");
+            return true
+        } else {
+            favState.favorites.push(cityName)
+            console.info("ajouté!");
+            console.log("arrayFav", favState.favorites);
+        }
+
     }
 
     return (
