@@ -1,6 +1,7 @@
 import { weatherRequest } from "../modules/API";
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
+import WeatherCards from "../Components/WeatherCards";
 
 export const WeatherContext = createContext()
 
@@ -10,6 +11,19 @@ export default function Home() {
 
     const [inputValue, setInputValue] = useState("");
     const [weatherDetails, setWeatherDetails] = useState({});
+    const [isLoaded, setIsLoaded] = useState(false)
+
+    const value = {
+        weatherDetails: weatherDetails,
+        setWeatherDetails: setWeatherDetails
+    }
+
+    useEffect(async () => {
+        const res = await weatherRequest("Paris")
+        setWeatherDetails(res);
+        setIsLoaded(true);
+        console.log(weatherDetails);
+    }, [])
 
     const handleChange = (e) => {
         setInputValue(e.target.value);
@@ -21,7 +35,7 @@ export default function Home() {
         console.log("resHandle", weatherDetails);
     }
 
-    const addFavorites = () => {
+    const addFavorite = () => {
 
         if (favState.favorites.includes(weatherDetails.name)) {
             console.warn("already added");
@@ -34,16 +48,34 @@ export default function Home() {
 
     }
 
+    if (isLoaded !== true) {
+        return (
+            <div>
+
+                <h1>Home</h1>
+
+                <input type="text" onChange={handleChange} />
+                <button onClick={handleClick}>Rechercher</button>
+                <button onClick={addFavorite}> Ajouter aux favoris </button>
+
+            </div>
+        )
+    }
+
     return (
-        <div>
+        <WeatherContext.Provider value={value}>
 
-            <h1>Home</h1>
+            <div>
 
-            <input type="text" onChange={handleChange} />
-            <button onClick={handleClick}>Rechercher</button>
-            <button onClick={addFavorites}> Ajouter aux favories </button>
-            <button onClick={addFavorites}> Suprimer des favories </button>
+                <h1>Home</h1>
 
-        </div>
+                <input type="text" onChange={handleChange} />
+                <button onClick={handleClick}>Rechercher</button>
+                <button onClick={addFavorite}> Ajouter aux favoris </button>
+                <WeatherCards />
+
+            </div>
+
+        </WeatherContext.Provider>
     )
 }
