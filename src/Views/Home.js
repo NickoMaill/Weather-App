@@ -1,4 +1,4 @@
-import { weatherRequest } from "../Modules/api";
+import { weatherRequest } from "../modules/API";
 import { useState, useContext, createContext } from "react";
 import { FavoritesContext } from "../App";
 
@@ -8,32 +8,26 @@ export default function Home() {
 
     const favState = useContext(FavoritesContext);
 
-    const [cityName, setCityName] = useState("");
-    const [temperature, setTemperature] = useState(null);
-    const [weather, setWeather] = useState("");
+    const [inputValue, setInputValue] = useState("");
+    const [weatherDetails, setWeatherDetails] = useState({});
 
     const handleChange = (e) => {
-        setCityName(e.target.value);
+        setInputValue(e.target.value);
     }
 
     const handleClick = async () => {
-        const res = await weatherRequest(cityName);
-        setCityName(res.name)
-        setTemperature(res.main.temp)
-        setWeather(res.weather[0].description)
-        console.log("resHandle", res);
-        console.log("City", cityName);
-        console.log("temperature", temperature);
-        console.log("weather", weather);
+        const res = await weatherRequest(inputValue);
+        setWeatherDetails(res)
+        console.log("resHandle", weatherDetails);
     }
 
     const addFavorites = () => {
 
-        if (favState.favorites.includes(cityName)) {
+        if (favState.favorites.includes(weatherDetails.name)) {
             console.warn("already added");
             return true
         } else {
-            favState.favorites.push(cityName)
+            favState.favorites.push(weatherDetails.name)
             console.info("ajouté!");
             console.log("arrayFav", favState.favorites);
         }
@@ -48,6 +42,7 @@ export default function Home() {
             <input type="text" onChange={handleChange} />
             <button onClick={handleClick}>Rechercher</button>
             <button onClick={addFavorites}> Ajouter aux favories </button>
+            <button onClick={addFavorites}> Suprimer des favories </button>
 
         </div>
     )
