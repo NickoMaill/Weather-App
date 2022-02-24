@@ -1,7 +1,7 @@
 import { weatherRequest } from "../modules/API";
 import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
-import WeatherCards from "../Components/WeatherCards";
+import WeatherCard from "../Components/WeatherCard";
 
 export const WeatherContext = createContext()
 
@@ -72,7 +72,7 @@ export default function Home() {
                 <input type="text" onChange={handleChange} />
                 <button onClick={handleClick}>Rechercher</button>
                 <button onClick={addFavorite}> Ajouter aux favoris </button>
-                <WeatherCards />
+                <WeatherCard />
 
             </div>
 

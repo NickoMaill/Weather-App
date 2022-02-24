@@ -1,13 +1,13 @@
 import { useContext } from "react";
-// import { FavoritesContext } from "../App";
 import { WeatherContext } from "../Views/Home";
+import "../Styles/WeatherCard.css"
 
 export default function WeatherCards() {
 
     const weatherState = useContext(WeatherContext)
 
     return(
-        <div>
+        <div className="card-div">
 
             <h3>{weatherState.weatherDetails.name}</h3>
             <h5>Temperature : </h5>
