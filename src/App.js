@@ -4,11 +4,13 @@ import { createContext, useState } from "react";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 import dayjs from "dayjs";
 
+
 //IMPORT VIEWS
 
 import Home from '../src/Views/Home';
 import Favorites from '../src/Views/Favorites';
 
+import "../src/App.css"
 //EXPORT CONTEXT
 
 export const FavoritesContext = createContext()
@@ -36,24 +38,34 @@ export default function App() {
 
       <BrowserRouter>
 
-        <nav>
-          <Link to="/">Home | </Link>
-          <Link to="/favorites">Favorites | </Link>
-        </nav>
+        <div className="app-content">
 
-        <Switch>
+          <header>
 
-          <Route exact path="/" component={Home} />
-          <Route exact path="/favorites" component={Favorites} />
+            <nav>
+              <Link className="link" to="/">Home</Link>
+              <Link className="link" to="/favorites">Favorites</Link>
+            </nav>
 
-        </Switch>
+          </header>
 
-        <footer>
-          <div>
-            <p>developed by Nicolas Maillols</p>
-            <p>{today}</p>
-          </div>
-        </footer>
+
+          <Switch>
+
+            <Route exact path="/" component={Home} />
+            <Route exact path="/favorites" component={Favorites} />
+
+          </Switch>
+
+          <footer>
+            <div className="footer-content">
+              <p>developed by Nicolas Maillols</p>
+              <p>{today}</p>
+            </div>
+          </footer>
+
+        </div>
+
 
       </BrowserRouter>
 

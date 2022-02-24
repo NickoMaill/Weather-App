@@ -36,12 +36,12 @@ export default function Home() {
 
     //function on page load
 
-    // useEffect(async () => {
-    //     const res = await weatherRequest("paris")
-    //     setWeatherDetails(res);
-    //     setIsLoaded(true);
-    //     console.log(weatherDetails);
-    // }, [])
+    useEffect(async () => {
+        const res = await weatherRequest("paris")
+        setWeatherDetails(res);
+        setIsLoaded(true);
+        console.log(weatherDetails);
+    }, [])
 
     //function for listen input
 
@@ -97,9 +97,13 @@ export default function Home() {
 
                 <h1>Home</h1>
 
-                <input className="input-search" placeholder="&#128269;  recherche" type="text" onChange={handleChange} />
-                <button className="btn search-btn" onClick={handleClick}>Rechercher</button>
-                <button className="btn fav-btn" onClick={addFavorite}> Ajouter aux favoris </button>
+                <div className="load-div">
+
+                    <div className="lds-facebook"><div></div><div></div><div></div></div>
+
+                </div>
+
+
 
             </div>
         )
@@ -110,14 +114,25 @@ export default function Home() {
     return (
         <WeatherContext.Provider value={value}>
 
-            <div>
+            <div className="home-content">
 
                 <h1>Home</h1>
 
-                <input className="input-search" placeholder="&#128269;  recherche" type="text" onChange={handleChange} />
-                <button className="btn search-btn" onClick={handleClick}>Rechercher</button>
-                <button className="btn fav-btn" onClick={addFavorite}> Ajouter aux favoris </button>
-                <WeatherCard />
+                <div className="home-container">
+
+                    <input className="input-search" placeholder="&#128269;  recherche" type="text" onChange={handleChange} />
+
+                    <div className="btn-group">
+
+                        <button className="btn search-btn" onClick={handleClick}>Rechercher</button>
+                        <button className="btn fav-btn" onClick={addFavorite}> Ajouter aux favoris </button>
+
+                    </div>
+                    <WeatherCard />
+
+
+                </div>
+
 
             </div>
 

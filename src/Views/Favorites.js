@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { FavoritesContext } from "../App";
 import CityCard from "../Components/CityCard";
+import { DateTime } from "luxon"
 import "../Styles/Favorites.css"
+
 
 export default function Favorites() {
 
@@ -21,26 +23,28 @@ export default function Favorites() {
 
                 <div className="center-div">
 
-                {favState.favorites.map((cityMap, i) => {
-                    if (i === 0 || i <= favState.favorites.length) {
-                        return (
+                    {favState.favorites.map((cityMap, i) => {
+                        if (i === 0 || i <= favState.favorites.length) {
+                            return (
 
-                            <CityCard
-                                key={i}
-                                name={cityMap.name}
-                                temp={Math.floor(cityMap.main.temp)}
-                                description={cityMap.weather[0].description}
-                                src={`http://openweathermap.org/img/wn/${cityMap.weather[0].icon}@2x.png`}
-                                alt={cityMap.weather[0].description}
-                                title={cityMap.weather[0].description}
-                                value={i}
+                                <CityCard
+                                    key={i}
+                                    name={cityMap.name}
+                                    temp={Math.floor(cityMap.main.temp)}
+                                    description={cityMap.weather[0].description}
+                                    src={`http://openweathermap.org/img/wn/${cityMap.weather[0].icon}@2x.png`}
+                                    alt={cityMap.weather[0].description}
+                                    title={cityMap.weather[0].description}
+                                    humidity={Math.round(cityMap.main.humidity)}
+                                    windSpeed={Math.round(cityMap.wind.speed * 3, 347)}
+                                    value={i}
                                 />
 
-                        )
+                            )
 
-                    }
+                        }
 
-                })}
+                    })}
                 </div>
 
 

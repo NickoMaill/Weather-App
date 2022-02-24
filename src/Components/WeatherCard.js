@@ -19,9 +19,11 @@ export default function WeatherCards() {
 
             <div className="info-div">
 
-                <p><strong>Temperature :</strong> {Math.round(weatherState.weatherDetails.main.temp)}°</p>
-                <span>{weatherState.weatherDetails.weather[0].description}</span>
                 <img src={`http://openweathermap.org/img/wn/${weatherState.weatherDetails.weather[0].icon}@2x.png`} alt="" />
+                <span>{weatherState.weatherDetails.weather[0].description}</span>
+                <p><strong>Temperature :</strong> {Math.round(weatherState.weatherDetails.main.temp)}°</p>
+                <p><strong>Humidité :</strong> {Math.round(weatherState.weatherDetails.main.humidity)} %</p>
+                <p><strong>Vents :</strong> {Math.round(weatherState.weatherDetails.wind.speed * 3,347)} KM/H</p>
 
             </div>
             <div className="icon-div">
