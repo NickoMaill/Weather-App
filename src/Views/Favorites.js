@@ -1,9 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { weatherRequest } from "../modules/API";
 import { FavoritesContext } from "../App";
 import CityCard from "../Components/CityCard";
-
-export const FavArrayContext = createContext()
 
 export default function Favorites() {
     const favState = useContext(FavoritesContext);
@@ -14,10 +12,11 @@ export default function Favorites() {
     useEffect(() => {
         favState.favorites.forEach(async (city) => {
             const res = await weatherRequest(city)
-            favArray.push(res)
+            favArray.push(res);
             setIsLoaded(true);
+            // console.log("res",city);
         });
-    })
+    }, [])
 
     if (isLoaded !== true) {
         return (
@@ -27,27 +26,33 @@ export default function Favorites() {
 
     return (
 
-            <div>
-                <h1>Favorites</h1>
-                <div className="fav-container">
+        <div>
+            <h1>Favorites</h1>
 
-                    {favArray.map((city, i) => {
-                        if (i === 0 || i <= favArray.length) {
+            <div className="fav-container">
 
-                            return (
+                {favArray.map((city, i) => {
+                    if (i === 0 || i <= favArray.length) {
 
-                                <CityCard
-                                    key={i}
-                                    name={city.name}
-                                    temp={city.main.temp}
-                                    description={city.weather[0].description} />
+                        return (
 
-                            )
-                        }
-                    })}
+                            <CityCard
+                                key={i}
+                                name={city.name}
+                                temp={city.main.temp}
+                                description={city.weather[0].description} />
 
-                </div>
+                        )
+                    }
+
+
+                })}
 
             </div>
+
+
+
+        </div>
     )
 }
+

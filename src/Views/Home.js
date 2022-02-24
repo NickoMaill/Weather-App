@@ -1,22 +1,36 @@
+//MODULES IMPORT
+
 import { weatherRequest } from "../modules/API";
 import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
+
+//COMPONENTS IMPORT
+
 import WeatherCard from "../Components/WeatherCard";
+
+//CREATE CONTEXT
 
 export const WeatherContext = createContext()
 
+//Here start the function App
 export default function Home() {
 
+    //create variable for context
     const favState = useContext(FavoritesContext);
 
+    //Create State
     const [inputValue, setInputValue] = useState("");
     const [weatherDetails, setWeatherDetails] = useState({});
     const [isLoaded, setIsLoaded] = useState(false)
+
+    //set value for context export
 
     const value = {
         weatherDetails: weatherDetails,
         setWeatherDetails: setWeatherDetails
     }
+
+    //function on page load
 
     useEffect(async () => {
         const res = await weatherRequest("Paris")
@@ -25,15 +39,21 @@ export default function Home() {
         console.log(weatherDetails);
     }, [])
 
+    //function for listen input
+
     const handleChange = (e) => {
         setInputValue(e.target.value);
     }
+
+    //function for launch weatherRequest() (function locate in API.js)
 
     const handleClick = async () => {
         const res = await weatherRequest(inputValue);
         setWeatherDetails(res)
         console.log("resHandle", weatherDetails);
     }
+
+    // function for adding a favorite in Favorites view
 
     const addFavorite = () => {
 
@@ -48,6 +68,8 @@ export default function Home() {
 
     }
 
+    //Guard on page load
+
     if (isLoaded !== true) {
         return (
             <div>
@@ -61,6 +83,8 @@ export default function Home() {
             </div>
         )
     }
+
+    //main return
 
     return (
         <WeatherContext.Provider value={value}>
