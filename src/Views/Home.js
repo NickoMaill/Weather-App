@@ -22,6 +22,7 @@ export default function Home() {
     const [inputValue, setInputValue] = useState("");
     const [weatherDetails, setWeatherDetails] = useState({});
     const [isLoaded, setIsLoaded] = useState(false)
+    const [idVerify, setIdVerify] = useState([])
 
     //set value for context export
 
@@ -57,13 +58,21 @@ export default function Home() {
 
     const addFavorite = () => {
 
+        if (idVerify.includes(weatherDetails.id)) {
+            console.warn("already added");
+            return true
+        } else {
+            idVerify.push(weatherDetails.id)
             favState.favorites.push(weatherDetails)
             console.info("ajouté!");
             console.log("arrayFav", favState.favorites);
+            console.log("idArray", idVerify);
 
-            // if (favState.favorites.includes(weatherDetails.name)) {
-            //     console.warn("already added");
-            //     return true
+        }
+
+        // if (favState.favorites.includes(weatherDetails.name)) {
+        //     console.warn("already added");
+        //     return true
     }
 
     //Guard on page load
