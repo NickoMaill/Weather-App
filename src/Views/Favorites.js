@@ -4,25 +4,8 @@ import { FavoritesContext } from "../App";
 import CityCard from "../Components/CityCard";
 
 export default function Favorites() {
+    
     const favState = useContext(FavoritesContext);
-
-    const [favArray, setFavArray] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false)
-
-    useEffect(() => {
-        favState.favorites.forEach(async (city) => {
-            const res = await weatherRequest(city)
-            favArray.push(res);
-            setIsLoaded(true);
-            // console.log("res",city);
-        });
-    }, [])
-
-    if (isLoaded !== true) {
-        return (
-            <h1>Favorites</h1>
-        )
-    }
 
     return (
 
@@ -31,26 +14,28 @@ export default function Favorites() {
 
             <div className="fav-container">
 
-                {favArray.map((city, i) => {
-                    if (i === 0 || i <= favArray.length) {
-
-                        return (
+                {favState.favorites.map((cityMap, i) => {
+                    if (i === 0 || i <= favState.favorites.length) {
+                        console.log(i);
+                    
+                    return (
 
                             <CityCard
                                 key={i}
-                                name={city.name}
-                                temp={city.main.temp}
-                                description={city.weather[0].description} />
+                                name={cityMap.name}
+                                temp={Math.floor(cityMap.main.temp)}
+                                description={cityMap.weather[0].description}
+                                src={`http://openweathermap.org/img/wn/${cityMap.weather[0].icon}@2x.png`}
+                                alt={cityMap.weather[0].description}
+                                title={cityMap.weather[0].description} />
 
                         )
-                    }
 
+                    }
 
                 })}
 
             </div>
-
-
 
         </div>
     )

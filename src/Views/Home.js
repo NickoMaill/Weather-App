@@ -57,15 +57,13 @@ export default function Home() {
 
     const addFavorite = () => {
 
-        if (favState.favorites.includes(weatherDetails.name)) {
-            console.warn("already added");
-            return true
-        } else {
-            favState.favorites.push(weatherDetails.name)
+            favState.favorites.push(weatherDetails)
             console.info("ajouté!");
             console.log("arrayFav", favState.favorites);
-        }
 
+            // if (favState.favorites.includes(weatherDetails.name)) {
+            //     console.warn("already added");
+            //     return true
     }
 
     //Guard on page load
