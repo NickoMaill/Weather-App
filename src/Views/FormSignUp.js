@@ -13,11 +13,11 @@ export default function FormSignUp() {
     } = useForm();
 
     const setAuth = () => {
-        // if (userState.isLogged === true) {
-        //     console.info("already logged");
-        // } else {
-        //     userState.setIsLogged(true)
-        // }
+        if (logState.isLogged === true) {
+            console.info("already logged");
+        } else {
+            userState.setIsLogged(true)
+        }
     }
 
     // const onSubmit = () => {
