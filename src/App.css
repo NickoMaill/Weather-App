@@ -1,42 +1,107 @@
-body{
+body {
   background-image: url(../src/assets/images/background.jpg);
-
+  background-size: cover;
 }
 
-.app-content{
+.app-content {
   background-color: rgba(0, 0, 0, 0.379);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-height: 100vh;
 }
 
-header{
+header {
   background-color: rgba(0, 0, 0, 0.68);
   padding: 1rem;
 }
 
-.link{
+nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+nav div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.logo-img {
+  width: 2rem;
+}
+
+.link {
   color: #fff;
   text-decoration: none;
-  margin: 1rem;
+  margin-inline: 1rem;
+  text-decoration: none;
+  text-transform: none;
+  position: relative;
+  padding: 0.3rem;
 }
 
-.home-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-footer{
-  position: fixed;
-  bottom: 0;
+.link::after {
+  border-radius: 1em;
+  border-top: 0.1em solid #fff;
+  content: "";
+  position: absolute;
+  right: 100%;
+  bottom: 0.14em;
   left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.68);
-  /* height: auto; */
-  padding:1rem ;
-  color: #fff;
+  -webkit-transition: right 0.4s cubic-bezier(0, 0.5, 0, 1);
+  transition: right 0.4s cubic-bezier(0, 0.5, 0, 1);
 }
 
-.footer-content{
-  display: flex;
-  justify-content: space-between;
-  
+.link:hover::after {
+  right: 0;
 }
+
+.link:hover {
+  text-decoration: none;
+}
+
+.home-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+footer {
+  background: rgba(0, 0, 0, 0.68);
+  color: #fff;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-top: auto;
+  width: 100%;
+}
+
+.footer-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-inline: 1rem;
+}
+/*# sourceMappingURL=App.css.map */

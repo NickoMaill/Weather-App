@@ -10,10 +10,12 @@ import dayjs from "dayjs";
 import Home from '../src/Views/Home';
 import Favorites from '../src/Views/Favorites';
 
-import "../src/App.css"
+import "./App.css"
+import FormSignUp from "./Views/FormSignUp";
 //EXPORT CONTEXT
 
 export const FavoritesContext = createContext()
+export const LogContext = createContext()
 
 //Here start the function App
 
@@ -23,11 +25,19 @@ export default function App() {
 
   const today = dayjs().format("DD/MM/YYYY");
   const [favorites, setFavorites] = useState([]); //create sate for favs'
+  const [isLogged, setIsLogged] = useState(false)
+  const [isSign, setIsSign] = useState(false)
 
   //value for context export
   const value = {
     favorites: favorites,
     setFavorites: setFavorites,
+    
+    isLogged: isLogged,
+    setIsLogged: setIsLogged,
+
+    isSign: isSign,
+    setIsSign: setIsSign,
   }
 
   //return here
@@ -43,8 +53,18 @@ export default function App() {
           <header>
 
             <nav>
-              <Link className="link" to="/">Home</Link>
-              <Link className="link" to="/favorites">Favorites</Link>
+
+              <div>
+                <img className="logo-img" src={require("./assets/images/AppLogo.png")} alt="logo de weather-app" />
+                <Link className="link" to="/">Home</Link>
+                <Link className="link" to="/favorites">Favorites</Link>
+              </div>
+
+              <div>
+                <Link className="link" to="/sign-in" >Se connecter</Link>
+                <Link className="link" to="/sign-up" >S'inscrire</Link>
+              </div>
+
             </nav>
 
           </header>
@@ -54,6 +74,8 @@ export default function App() {
 
             <Route exact path="/" component={Home} />
             <Route exact path="/favorites" component={Favorites} />
+            <Route exact path="/sign-in" component={Favorites} />
+            <Route exact path="/sign-up" component={FormSignUp} />
 
           </Switch>
 

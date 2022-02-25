@@ -3,11 +3,11 @@
 import { weatherRequest } from "../modules/API";
 import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+// import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-
-//COMPONENTS IMPORT
-
-import WeatherCard from "../Components/WeatherCard";
 
 //STYLE IMPORT
 import "../Styles/Home.css"
@@ -15,6 +15,7 @@ import "../Styles/Home.css"
 
 export const WeatherContext = createContext()
 
+library.add(faHeart)
 //Here start the function App
 export default function Home() {
 
@@ -75,10 +76,6 @@ export default function Home() {
             console.warn("limité a 3 favoris")
             return true
 
-        } else if (inputValue === "") {
-            console.warn("chercher d'abord une ville avant de l'ajouter a vos favoris");
-            return true
-
         } else {
 
             setIdVerify(prevId => [...prevId, weatherDetails.id])
@@ -103,8 +100,6 @@ export default function Home() {
 
                 </div>
 
-
-
             </div>
         )
     }
@@ -123,16 +118,35 @@ export default function Home() {
                     <input className="input-search" placeholder="&#128269;  recherche" type="text" onChange={handleChange} />
 
                     <div className="btn-group">
-
                         <button className="btn search-btn" onClick={handleClick}>Rechercher</button>
-                        <button className="btn fav-btn" onClick={addFavorite}> Ajouter aux favoris </button>
+                    </div>
+
+                    <div className="card-div">
+
+                        <div className="title-div">
+                            <h3>{weatherDetails.name}</h3>
+                        </div>
+
+                        <div className="info-div">
+                            <img src={`http://openweathermap.org/img/wn/${weatherDetails.weather[0].icon}@2x.png`}
+                                alt={weatherDetails.weather[0].description}
+                                title={weatherDetails.weather[0].description}
+                            />
+
+                            <span>{weatherDetails.weather[0].description}</span>
+                            <p><strong>Temperature :</strong> {Math.round(weatherDetails.main.temp)}°</p>
+                            <p><strong>Humidité :</strong> {Math.round(weatherDetails.main.humidity)} %</p>
+                            <p><strong>Vents :</strong> {Math.round(weatherDetails.wind.speed * 3, 347)} KM/H</p>
+                        </div>
+
+                        <div onClick={addFavorite} className="icon-div">
+                            <FontAwesomeIcon className={"fav-icon"} icon="fa-regular fa-heart" />
+                            {/* <FontAwesomeIcon icon="fa-regular fa-heart" /> */}
+                        </div>
 
                     </div>
-                    <WeatherCard />
-
 
                 </div>
-
 
             </div>
 

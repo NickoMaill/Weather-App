@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart } from "@fortawesome/free-solid-svg-icons"
 import "../Styles/WeatherCard.css"
 import { library } from "@fortawesome/fontawesome-svg-core";
+
 library.add(faHeart)
 
 export default function WeatherCards() {
@@ -23,11 +24,10 @@ export default function WeatherCards() {
                 <span>{weatherState.weatherDetails.weather[0].description}</span>
                 <p><strong>Temperature :</strong> {Math.round(weatherState.weatherDetails.main.temp)}°</p>
                 <p><strong>Humidité :</strong> {Math.round(weatherState.weatherDetails.main.humidity)} %</p>
-                <p><strong>Vents :</strong> {Math.round(weatherState.weatherDetails.wind.speed * 3,347)} KM/H</p>
+                <p><strong>Vents :</strong> {Math.round(weatherState.weatherDetails.wind.speed * 3, 347)} KM/H</p>
 
             </div>
             <div className="icon-div">
-
                 <FontAwesomeIcon className="fav-icon" icon="fa-solid fa-heart" />
             </div>
 
