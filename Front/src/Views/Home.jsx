@@ -1,6 +1,6 @@
 //MODULES IMPORT
 
-import { weatherRequest } from "../modules/API";
+import { weatherRequest } from "../utils/API";
 import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
