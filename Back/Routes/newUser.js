@@ -24,3 +24,5 @@ route.post("/", upload.single("image"), validNewUser, verifyFile, (req, res) => 
 	);
     console.log("user added");
 });
+
+module.exports = route;

@@ -1,11 +1,13 @@
 const express = require("express");
 const cors = require("./Middlewares/cors");
+const newUser = require("./Routes/newUser");
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors());
+app.use("/new-user", newUser);
 
 app.get("/", (_req, res) => {
 	res.send("Bonjour");
