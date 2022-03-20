@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import Home from '../src/Views/Home';
 import Favorites from '../src/Views/Favorites';
 
-import "./App.css"
+import "./App.scss"
 import FormSignUp from "./Views/FormSignUp";
 //EXPORT CONTEXT
 
