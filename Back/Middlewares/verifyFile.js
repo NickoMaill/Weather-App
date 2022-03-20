@@ -1,6 +1,6 @@
 const path = require("path");
 
-function checkTypeFile(req, res, next) {
+function verifyFile(req, res, next) {
 	let type = path.extname(req.file.originalname);
 
 	if (type !== ".jpg" && type !== ".jpeg" && type !== ".png" && type !== ".webp") {
@@ -14,4 +14,4 @@ function checkTypeFile(req, res, next) {
 	next();
 }
 
-module.exports = checkTypeFile;
+module.exports = verifyFile;
