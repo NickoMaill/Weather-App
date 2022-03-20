@@ -7,8 +7,8 @@ import dayjs from "dayjs";
 
 //IMPORT VIEWS
 
-import Home from '../src/Views/Home';
-import Favorites from '../src/Views/Favorites';
+import Home from './Views/Home';
+import Favorites from './Views/Favorites';
 
 import "./App.scss"
 import FormSignUp from "./Views/FormSignUp";
