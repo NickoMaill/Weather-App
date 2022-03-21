@@ -1,16 +1,43 @@
-UPDATE TABLE users (
-    user_id INTEGER,
-    user_name VARCHAR(50),
+CREATE TABLE users (
+    id INTEGER,
+    name VARCHAR(50),
     surname VARCHAR(50),
     gender VARCHAR(50),
-    birthDay INTEGER,
-    birthMonth VARCHAR(20),
-    birthYear INTEGER,
-    address_number INTEGER,
-    street_adress VARCHAR(50),
-    district_name VARCHAR(50),
-    city VARCHAR(50),
+    birth_date JSON,
+    adress JSON,
     email VARCHAR(50),
-    user_password VARCHAR(300),
-    profile_picture VARCHAR(50)
+    password VARCHAR(300),
+	created_at JSON
 );
+INSERT INTO users(
+        user_id,
+        user_name,
+        surname,
+        gender,
+        birth_day,
+        birth_month,
+        birth_year,
+        number_adress,
+        street_adress,
+        district_name,
+        city,
+        email,
+        user_password,
+        profile_picture
+    )
+VALUES(
+    45679,
+    'Nicolas',
+    'Maillols',
+    'male',
+    02,
+    12,
+    1995,
+    01,
+    'rue Pierre Louÿs',
+    '75016',
+    'Paris',
+    'nicomaillols@gmail.com',
+    'Borabora2011@',
+    'gfrgsvqvfqfvsfgv'
+)

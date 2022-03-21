@@ -1,6 +1,4 @@
 //MODULES IMPORT
-
-import { weatherRequest } from "../utils/API";
 import { useState, useContext, createContext, useEffect } from "react";
 import { FavoritesContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +8,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 
 //STYLE IMPORT
 import "../Sass/Home.scss";
+import weatherRequest from "../utils/API";
 //CREATE CONTEXT
 
 export const WeatherContext = createContext();
@@ -35,11 +34,13 @@ export default function Home() {
 
 	//function on page load
 
-	useEffect(async () => {
-		const res = await weatherRequest("paris");
-		setWeatherDetails(res);
-		setIsLoaded(true);
-		console.log(weatherDetails);
+	useEffect(() => {
+
+			weatherRequest("paris").then(res => {
+			setWeatherDetails(res);
+			setIsLoaded(true);
+			console.log(res);
+		});
 	}, []);
 
 	//function for listen input
@@ -50,15 +51,17 @@ export default function Home() {
 
 	//function for launch weatherRequest() (function locate in API.js)
 
-	const handleClick = async () => {
+	const handleClick = () => {
 		if (inputValue === "") {
 			console.error("oups");
 			return true;
 		} else {
-			const res = await weatherRequest(inputValue);
-			setWeatherDetails(res);
-			setIsLoaded(true);
-			console.log("resHandle", weatherDetails);
+			weatherRequest(inputValue).then(res => {
+				setWeatherDetails(res);
+				setIsLoaded(true);
+				console.log(weatherDetails);
+
+			});
 		}
 	};
 
