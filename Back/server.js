@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require("./Middlewares/cors");
+const cors = require("./middlewares/cors");
 const newUser = require("./Routes/newUser");
 const app = express();
 const PORT = 8000;

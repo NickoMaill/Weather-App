@@ -7,8 +7,8 @@ const Postgres = new Pool({ ssl: { rejectUnauthorized: false } });
 const fs = require("fs");
 const path = require("path");
 const dayjs = require("dayjs");
-const validNewUser = require("../Middlewares/validNewUser");
-const verifyFile = require("../Middlewares/verifyFile");
+const validNewUser = require("../middlewares/validNewUser");
+const verifyFile = require("../middlewares/verifyFile");
 const dotenv = require("dotenv");
 dotenv.config({
 	path: "./config.env",
@@ -28,19 +28,27 @@ route.get("/", async (req, res) => {
 });
 
 route.post("/", validNewUser, async (req, res) => {
-
 	// let type = path.extname(req.file.originalname);
 	let users = await Postgres.query("SELECT * FROM users");
 	let usersArray = users.rows;
+	const verifyEmail = usersArray.find((user) => {
+		return user.id === req.body.email;
+	});
+
+	if (verifyEmail !== undefined) {
+		return res.status(400).json({
+			message: "An error happened. this mail address is already used.",
+		});
+	}
+
 	const currentDate = {
 		year: parseInt(dayjs().format("YYYY")),
 		month: dayjs().format("MMMM"),
 		day: parseInt(dayjs().format("DD")),
-		time: dayjs().format("HH:mm:ss")
-	}
+		time: dayjs().format("HH:mm:ss"),
+	};
 
 	function uniqueRandom(minRandom, maxRandom) {
-
 		const uniqueNumber = Math.floor(Math.random() * (maxRandom - minRandom + 1) + minRandom);
 		const newLengthArray = usersArray.length + minRandom;
 		const findNewId = usersArray.find((findNewId) => {
@@ -56,11 +64,6 @@ route.post("/", validNewUser, async (req, res) => {
 			}
 		}
 	}
-
-	// fs.renameSync(
-	// 	req.file.path,
-	// 	path.join(req.file.destination, `${req.body.name}-${dayjs().format("DD-MM-YYYY-HH:mm")}.${type}`)
-	// );
 
 	try {
 		await Postgres.query(
