@@ -1,38 +1,20 @@
 const express = require("express");
 const route = express.Router();
-const multer = require("multer");
-const upload = multer({ dest: "public/uploads" });
 const { Pool } = require("pg");
 const Postgres = new Pool({ ssl: { rejectUnauthorized: false } });
-const fs = require("fs");
-const path = require("path");
 const dayjs = require("dayjs");
 const validNewUser = require("../middlewares/validNewUser");
-const verifyFile = require("../middlewares/verifyFile");
 const dotenv = require("dotenv");
 dotenv.config({
 	path: "./config.env",
 });
 
-route.get("/", async (req, res) => {
-	let users;
-	try {
-		users = await Postgres.query("SELECT * FROM users");
-	} catch (err) {
-		console.error(err);
-		return res.status(400).json({
-			message: "an error happened",
-		});
-	}
-	console.log(users.rows);
-});
-
 route.post("/", validNewUser, async (req, res) => {
-	// let type = path.extname(req.file.originalname);
 	let users = await Postgres.query("SELECT * FROM users");
 	let usersArray = users.rows;
+
 	const verifyEmail = usersArray.find((user) => {
-		return user.id === req.body.email;
+		return user.email === req.body.email;
 	});
 
 	if (verifyEmail !== undefined) {

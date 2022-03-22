@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(cors);
 app.use("/new-user", newUser);
+app.use("/user", user);
 
 app.get("/", (_req, res) => {
 	res.send("Bonjour");
