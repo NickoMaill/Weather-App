@@ -1,10 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LogContext } from "../App";
 import "../Sass/FormSignUp.scss";
 
 export default function FormSignUp() {
 	const logState = useContext(LogContext);
+	const [name, setName] = useState("");
+	const [surname, setSurname] = useState("");
+	const [gender, setGender] = useState("");
+	const [birthDay, setBirthDay] = useState(null);
+	const [birthMonth, setBirthMonth] = useState("");
+	const [birthYear, setBirthYear] = useState(null);
+	const [streetNumber, setStreetNumber] = useState(null);
+	const [street, setStreet] = useState("");
+	const [district, setDistrict] = useState("");
+	const [city, setCity] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [RePassword, setRePassword] = useState("");
 
 	const {
 		register,
@@ -12,60 +25,48 @@ export default function FormSignUp() {
 		formState: { errors },
 	} = useForm();
 
-	const setAuth = () => {
-		if (logState.isLogged === true) {
-			console.info("already logged");
-		} else {
-			// userState.setIsLogged(true)
-		}
+	const userRegister = () => {
+		const formData = new FormData;
 	};
 
-	// const onSubmit = () => {
-	//     userState.setIsLogged(false)
-	// };
-
-	// if (userState.isLogged !== false) {
-	//     return (
-	//         <button className="button" onClick={onSubmit}>Se déconnecter</button>
-	//     )
-	// }
+	console.log(birthYear);
 
 	return (
 		<div>
 			<h1>S'inscrire</h1>
 
 			<section className="form-section">
-				<form onSubmit={handleSubmit(setAuth)}>
+				<form onSubmit={handleSubmit}>
 					<h3>Formulaire d'inscription</h3>
 					<p>remplissez attentivement ce formulaire pour pouvoir bénéficier de toutes nos fonctionnalisées</p>
 
 					<div className="name-div">
-						<input placeholder="Nom*" {...register("lastName", { required: true })} />
+						<input placeholder="Nom*" {...register("lastName", { required: true, onChange: (e) => { setSurname(e.target.value) } })} />
 						{errors.lastName && <span>Vous devez entrer votre Nom</span>}
 
-						<input placeholder="Prénom*" {...register("name", { required: true })} />
+						<input placeholder="Prénom*" {...register("name", { required: true, onChange: (e) => { setName(e.target.value) } })} />
 						{errors.name && <span>Vous devez renseigner votre prénom</span>}
 					</div>
 
 					<div className="gender-div">
-						<select className="gender" {...register("category")}>
+						<select className="gender" {...register("category", { onChange: (e) => { setGender(e.target.value) } })}>
 							<option value="gender">--Genre--</option>
-							<option value="man">Homme</option>
-							<option value="woman">Femme</option>
+							<option value="male">Homme</option>
+							<option value="female">Femme</option>
 							<option value="other">Autre</option>
 						</select>
 					</div>
 
 					<div className="other-gender">
 						<span>si autre, vous pouvez le préciser ici</span>
-						<input {...register("other")} />
+						<input {...register("other", { required: true, onChange: (e) => { setGender(e.target.value) } })} />
 					</div>
 
 					<div className="birthDate-div">
 						<span>Date de naissance</span>
 
 						<div className="birthDate-choice-div">
-							<select value="day" {...register("day")}>
+							<select {...register("day", { required: true, onChange: (e) => { setBirthDay(parseInt(e.target.value)) } })}>
 								<option value="day">jour</option>
 								<option value="01">01</option>
 								<option value="02">02</option>
@@ -100,23 +101,23 @@ export default function FormSignUp() {
 								<option value="31">31</option>
 							</select>
 
-							<select value="month" {...register("month")}>
+							<select {...register("month", { required: true, onChange: (e) => { setBirthMonth(e.target.value) } })}>
 								<option value="month">Mois</option>
-								<option value="01">Janvier</option>
-								<option value="02">Février</option>
-								<option value="03">Mars</option>
-								<option value="04">Avril</option>
-								<option value="05">Mai</option>
-								<option value="06">Juin</option>
-								<option value="07">Juillet</option>
-								<option value="08">Août</option>
-								<option value="09">septembre</option>
-								<option value="10">Octobre</option>
-								<option value="11">Novembre</option>
-								<option value="12">Décembre</option>
+								<option value="January">Janvier</option>
+								<option value="February">Février</option>
+								<option value="March">Mars</option>
+								<option value="April">Avril</option>
+								<option value="May">Mai</option>
+								<option value="June">Juin</option>
+								<option value="July">Juillet</option>
+								<option value="August">Août</option>
+								<option value="September">septembre</option>
+								<option value="October">Octobre</option>
+								<option value="November">Novembre</option>
+								<option value="December">Décembre</option>
 							</select>
 
-							<select value="year" {...register("year")}>
+							<select {...register("year", { required: true, onChange: (e) => { setBirthYear(parseInt(e.target.value)) } })}>
 								<option value="year">Année</option>
 								<option value="1940">1940</option>
 								<option value="1941">1941</option>
@@ -207,13 +208,13 @@ export default function FormSignUp() {
 
 					<div className="adress-div">
 						<span>Adresse*</span>
-						<input placeholder="N°" {...register("numberAdress", { required: true })} />
+						<input placeholder="N°" {...register("numberAdress", { required: true, onChange: (e) => { setStreetNumber(parseInt(e.target.value)) } })} />
 						<input
 							placeholder="Rue, Avenue, Boulvard, etc..."
-							{...register("street", { required: true })}
+							{...register("street", { required: true, onChange: (e) => { setStreet(e.target.value) } })}
 						/>
-						<input placeholder="Arrondissement" {...register("district", { required: true })} />
-						<input placeholder="Ville" {...register("city", { required: true })} />
+						<input placeholder="Arrondissement" {...register("district", { required: true, onChange: (e) => { setDistrict(e.target.value) } })} />
+						<input placeholder="Ville" {...register("city", { required: true, onChange: (e) => { setCity(e.target.value) } })} />
 					</div>
 
 					<div className="email-div">
@@ -223,7 +224,7 @@ export default function FormSignUp() {
 							<input
 								type="text"
 								placeholder="Email*"
-								{...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+								{...register("email", { required: true, pattern: /^\S+@\S+$/i, onChange: (e) => { setEmail(e.target.value) } })}
 							/>
 							{errors.email && <span>Veuillez renter une adresse mail valide</span>}
 						</div>
@@ -235,8 +236,9 @@ export default function FormSignUp() {
 						<div className="password">
 							<div className="password-input">
 								<input
+									onChange={setPassword}
 									placeholder="Mot de passe*"
-									{...register("password", { required: true, minLength: 6 })}
+									{...register("password", { required: true, minLength: 6, onChange: (e) => { setPassword(e.target.value) } })}
 								/>
 								{errors.password && (
 									<span>
@@ -248,7 +250,7 @@ export default function FormSignUp() {
 							<div className="password-input">
 								<input
 									placeholder="Confirmez*"
-									{...register("password", { required: true, minLength: 6 })}
+									{...register("password", { required: true, minLength: 6, onChange: (e) => { setRePassword(e.target.value) } })}
 								/>
 								{errors.password && <span>vos mots de passe doivent être identiques</span>}
 							</div>
