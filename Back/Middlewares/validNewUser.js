@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const newUser = Joi.object({
-    userId: Joi.number(),
+	userId: Joi.number(),
 	name: Joi.string().min(5).max(30).required(),
 	surname: Joi.string().min(5).max(30).required(),
 	gender: Joi.string(),
@@ -17,8 +17,12 @@ const newUser = Joi.object({
 		district: Joi.string().min(1).max(50).required(),
 		city: Joi.string().min(1).max(50).required(),
 	},
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-	password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+	email: Joi.string()
+		.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "fr"] } })
+		.required(),
+	password: Joi.string()
+		.required()
+		.regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
 	repeatPassword: Joi.ref("password"),
 });
 

@@ -13,8 +13,9 @@ dotenv.config({
 	path: "./config.env",
 });
 
-route.get("/connection/:email/:password/", async (req, res) => {
-	const user = Postgres.query("SELECT * FROM users WHERE users.email=$1 AND users.password=$2", [
+route.get("/connection/:email/:password", async (req, res) => {
+	console.log(req.params);
+	const user = await Postgres.query("SELECT * FROM users WHERE email=$1 AND password=$2", [
 		req.params.email,
 		req.params.password,
 	]);
@@ -24,13 +25,13 @@ route.get("/connection/:email/:password/", async (req, res) => {
 	} catch (err) {
 		console.error(err);
 		return res.status(400).json({
-			message: "an error happened when connect",
+			message: "wrong email or password",
 		});
 	}
-	res.json(user);
+	res.json(user.rows);
 });
 
-route.post("/:id/profile-picture", upload.single("image"), verifyFile, async (req, res) => {
+route.post("/profile-picture/:id", upload.single("image"), verifyFile, async (req, res) => {
 	let type = path.extname(req.file.originalname);
 	let user = await Postgres.query("SELECT * FROM users WHERE users.id=$1", [req.params.id]);
 	let fileName = `${user.rows[0].surname}-${user.rows[0].surname}-${dayjs().format("DD-MM-YYYY-HH:mm")}${type}`;
