@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LogContext } from "../App";
 import "../Sass/FormSignUp.scss";
@@ -7,7 +7,7 @@ export default function FormSignUp() {
 	const logState = useContext(LogContext);
 	const [name, setName] = useState("");
 	const [surname, setSurname] = useState("");
-	const [gender, setGender] = useState("");
+	const [gender, setGender] = useState("unknown");
 	const [birthDay, setBirthDay] = useState(null);
 	const [birthMonth, setBirthMonth] = useState("");
 	const [birthYear, setBirthYear] = useState(null);
@@ -18,6 +18,7 @@ export default function FormSignUp() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [RePassword, setRePassword] = useState("");
+	const [matchPassword, setMatchPassword] = useState(Boolean)
 
 	const {
 		register,
@@ -26,25 +27,64 @@ export default function FormSignUp() {
 	} = useForm();
 
 	const userRegister = () => {
-		const formData = new FormData;
-	};
 
-	console.log(birthYear);
+		// if (password !== RePassword && password.length !== 0 && RePassword.length !== 0) {
+		// 	setMatchPassword(true)
+		// 	return
+		// }
+
+		const formData = new FormData();
+
+		formData.append("name", name);
+		formData.append("surname", surname);
+		formData.append("gender", gender);
+		formData.append("birthDate", {
+			day: birthDay,
+			month: birthMonth,
+			year: birthYear,
+		});
+		formData.append("userAddress", {
+			number: streetNumber,
+			street: street,
+			district: district,
+			city: city,
+		});
+		formData.append("email", email);
+		formData.append("password", password);
+		console.log(formData);
+
+		fetch('http://localhost:8000/new-user/', {
+			method: "POST",
+			body: formData,
+		})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+			})
+
+	};
 
 	return (
 		<div>
 			<h1>S'inscrire</h1>
-
 			<section className="form-section">
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleSubmit(userRegister)}>
 					<h3>Formulaire d'inscription</h3>
 					<p>remplissez attentivement ce formulaire pour pouvoir bénéficier de toutes nos fonctionnalisées</p>
 
 					<div className="name-div">
-						<input placeholder="Nom*" {...register("lastName", { required: true, onChange: (e) => { setSurname(e.target.value) } })} />
+						<input
+							type="text"
+							placeholder="Nom*"
+							{...register("lastName", { required: true, onChange: (e) => { setSurname(e.target.value) } })}
+						/>
 						{errors.lastName && <span>Vous devez entrer votre Nom</span>}
 
-						<input placeholder="Prénom*" {...register("name", { required: true, onChange: (e) => { setName(e.target.value) } })} />
+						<input
+							type="text"
+							placeholder="Prénom*"
+							{...register("name", { required: true, onChange: (e) => { setName(e.target.value) } })}
+						/>
 						{errors.name && <span>Vous devez renseigner votre prénom</span>}
 					</div>
 
@@ -59,7 +99,7 @@ export default function FormSignUp() {
 
 					<div className="other-gender">
 						<span>si autre, vous pouvez le préciser ici</span>
-						<input {...register("other", { required: true, onChange: (e) => { setGender(e.target.value) } })} />
+						<input type="text" {...register("other", { required: true, onChange: (e) => { setGender(e.target.value) } })} />
 					</div>
 
 					<div className="birthDate-div">
@@ -208,13 +248,24 @@ export default function FormSignUp() {
 
 					<div className="adress-div">
 						<span>Adresse*</span>
-						<input placeholder="N°" {...register("numberAdress", { required: true, onChange: (e) => { setStreetNumber(parseInt(e.target.value)) } })} />
+						<input type="text" placeholder="N°" {...register("numberAdress", { required: true, onChange: (e) => { setStreetNumber(parseInt(e.target.value)) } })} />
 						<input
+							type="text"
 							placeholder="Rue, Avenue, Boulvard, etc..."
 							{...register("street", { required: true, onChange: (e) => { setStreet(e.target.value) } })}
 						/>
-						<input placeholder="Arrondissement" {...register("district", { required: true, onChange: (e) => { setDistrict(e.target.value) } })} />
-						<input placeholder="Ville" {...register("city", { required: true, onChange: (e) => { setCity(e.target.value) } })} />
+
+						<input
+							type="text"
+							placeholder="Arrondissement"
+							{...register("district", { required: true, onChange: (e) => { setDistrict(e.target.value) } })}
+						/>
+
+						<input
+							type="text"
+							placeholder="Ville"
+							{...register("city", { required: true, onChange: (e) => { setCity(e.target.value) } })}
+						/>
 					</div>
 
 					<div className="email-div">
@@ -236,9 +287,9 @@ export default function FormSignUp() {
 						<div className="password">
 							<div className="password-input">
 								<input
-									onChange={setPassword}
 									placeholder="Mot de passe*"
-									{...register("password", { required: true, minLength: 6, onChange: (e) => { setPassword(e.target.value) } })}
+									type="text"
+									{...register("password", { required: true, onChange: (e) => { setPassword(e.target.value) } })}
 								/>
 								{errors.password && (
 									<span>
@@ -250,15 +301,16 @@ export default function FormSignUp() {
 							<div className="password-input">
 								<input
 									placeholder="Confirmez*"
-									{...register("password", { required: true, minLength: 6, onChange: (e) => { setRePassword(e.target.value) } })}
+									type="text"
+									{...register("Repassword", { required: true, onChange: (e) => { setRePassword(e.target.value) } })}
 								/>
-								{errors.password && <span>vos mots de passe doivent être identiques</span>}
+								{matchPassword && <span>vos mots de passe doivent être identiques</span>}
 							</div>
 						</div>
 					</div>
 
 					<div className="btn-div">
-						<button className="btn" type="submit">
+						<button className="btn" onClick={() => userRegister()} type="submit">
 							S'inscrire
 						</button>
 					</div>

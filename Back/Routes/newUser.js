@@ -1,5 +1,7 @@
 const express = require("express");
 const route = express.Router();
+const multer = require("multer");
+const upload = multer();
 const { Pool } = require("pg");
 const Postgres = new Pool({ ssl: { rejectUnauthorized: false } });
 const dayjs = require("dayjs");
@@ -9,7 +11,8 @@ dotenv.config({
 	path: "./config.env",
 });
 
-route.post("/", validNewUser, async (req, res) => {
+route.post("/", async (req, res) => {
+	console.log(req.body);
 	let users = await Postgres.query("SELECT * FROM users");
 	let usersArray = users.rows;
 

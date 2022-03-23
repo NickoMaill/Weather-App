@@ -2,8 +2,8 @@ const Joi = require("joi");
 
 const newUser = Joi.object({
 	userId: Joi.number(),
-	name: Joi.string().min(5).max(30).required(),
-	surname: Joi.string().min(5).max(30).required(),
+	name: Joi.string().min(1).max(30).required(),
+	surname: Joi.string().min(1).max(30).required(),
 	gender: Joi.string(),
 	otherGender: Joi.string(),
 	birthDate: {
