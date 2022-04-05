@@ -1,19 +1,25 @@
+//LIBRARY IMPORT
 const express = require("express");
 const dotenv = require("dotenv");
 dotenv.config({
 	path: "./config.env",
 });
+const cookieParser = require("cookie-parser");
+
+//MIDDLEWARE IMPORT
 const cors = require("./middlewares/cors");
-const newUser = require("./Routes/newUser");
-const user = require("./Routes/connectUser");
+
+//ROUTES IMPORT
+const user = require("./Routes/user");
+
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors);
-app.use("/new-user", newUser);
-app.use("/user", user);
+app.use(cookieParser())
+app.use("/new-user", user);
 
 app.get("/", (_req, res) => {
 	res.send("Bonjour");
