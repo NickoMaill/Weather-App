@@ -81,7 +81,7 @@ route.post("/profile-picture/:id", upload.single("image"), verifyFile, async (re
 	let user = await Postgres.query("SELECT * FROM users WHERE users.id=$1", [req.params.id]);
 	let fileName = `${user.rows[0].surname}-${user.rows[0].surname}-${dayjs().format("DD-MM-YYYY-HH:mm")}${type}`;
 
-	let updateProfilePicture = await Postgres.query("UPDATE users SET profile_picture = $1 WHERE id= $2", [
+	let updateProfilePicture = await Postgres.query("UPDATE users SET profile_picture = $1 WHERE user_id= $2", [
 		`${req.file.destination}/${fileName}`,
 		req.params.id,
 	]);
