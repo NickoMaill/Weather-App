@@ -1,4 +1,8 @@
 const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config({
+	path: "./config.env",
+});
 const cors = require("./middlewares/cors");
 const newUser = require("./Routes/newUser");
 const user = require("./Routes/connectUser");

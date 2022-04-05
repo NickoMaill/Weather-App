@@ -8,10 +8,6 @@ const fs = require("fs");
 const path = require("path");
 const dayjs = require("dayjs");
 const verifyFile = require("../middlewares/verifyFile");
-const dotenv = require("dotenv");
-dotenv.config({
-	path: "./config.env",
-});
 
 route.get("/connection/:email/:password", async (req, res) => {
 	console.log(req.params);

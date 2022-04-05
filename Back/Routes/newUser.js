@@ -1,15 +1,10 @@
 const express = require("express");
 const route = express.Router();
-const multer = require("multer");
-const upload = multer();
 const { Pool } = require("pg");
 const Postgres = new Pool({ ssl: { rejectUnauthorized: false } });
-const dayjs = require("dayjs");
 const validNewUser = require("../middlewares/validNewUser");
-const dotenv = require("dotenv");
-dotenv.config({
-	path: "./config.env",
-});
+const currentDate = require("../utils/getCurrentDate");
+
 
 route.post("/", async (req, res) => {
 	console.log(req.body);
@@ -26,29 +21,7 @@ route.post("/", async (req, res) => {
 		});
 	}
 
-	const currentDate = {
-		year: parseInt(dayjs().format("YYYY")),
-		month: dayjs().format("MMMM"),
-		day: parseInt(dayjs().format("DD")),
-		time: dayjs().format("HH:mm:ss"),
-	};
 
-	function uniqueRandom(minRandom, maxRandom) {
-		const uniqueNumber = Math.floor(Math.random() * (maxRandom - minRandom + 1) + minRandom);
-		const newLengthArray = usersArray.length + minRandom;
-		const findNewId = usersArray.find((findNewId) => {
-			return findNewId.id === uniqueNumber;
-		});
-		if (newLengthArray.length === maxRandom) {
-			return console.log("all value are assigned");
-		} else {
-			if (findNewId !== undefined) {
-				uniqueRandom(maxRandom, minRandom);
-			} else {
-				return uniqueNumber;
-			}
-		}
-	}
 
 	try {
 		await Postgres.query(
@@ -62,7 +35,7 @@ route.post("/", async (req, res) => {
 				req.body.userAddress,
 				req.body.email,
 				req.body.password,
-				currentDate,
+				currentDate(),
 			]
 		);
 	} catch (err) {

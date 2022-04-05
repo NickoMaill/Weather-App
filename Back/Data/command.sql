@@ -1,14 +1,17 @@
 CREATE TABLE users (
     id INTEGER,
+    email VARCHAR(50),
     name VARCHAR(50),
+    password VARCHAR(300),
     surname VARCHAR(50),
     gender VARCHAR(50),
     birth_date JSON,
     adress JSON,
-    email VARCHAR(50),
-    password VARCHAR(300),
 	created_at JSON
 );
+
+SELECT * FROM users WHERE users.birth_date ->>'year' = '1976';
+
 INSERT INTO users(
         user_id,
         user_name,
