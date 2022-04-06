@@ -1,4 +1,4 @@
-const currentDate = () => {
+const currentDate = (type) => {
 	const newDate = new Date();
 
 	const date = {
@@ -7,7 +7,13 @@ const currentDate = () => {
 		day: newDate.getDay().toString(),
 		time: `${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`,
 	};
-	return console.log(date);
+
+	if (type === "file") {
+		return `${date.day}-${date.month}-${date.year}-${date.time}`
+	} else {
+		return date;
+
+	}
 };
 
 module.exports = currentDate;
