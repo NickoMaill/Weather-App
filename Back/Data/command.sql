@@ -31,29 +31,30 @@ CREATE TABLE search_history(
     CONSTRAINT fk_request_id FOREIGN KEY (request_id) REFERENCES request_history(request_id)
 );
 
-SELECT * FROM users WHERE users.birth_date ->>'year' = '1976';
+SELECT * FROM users;
+-- SELECT * FROM users WHERE users.birth_date ->>'year' = '1976';
 
-INSERT INTO users(
-        user_id,
-        email,
-        first_name
-        last_name,
-        gender,
-        birth_date,
-        address,
-        password,
-        profile_picture_path,
-        created_at
-    )
-VALUES(
-    $1,
-    $2,
-    $3,
-    $4,
-    $5,
-    $6,
-    $7,
-    $8,
-    $9,
-    $10
-)
+-- INSERT INTO users(
+--         user_id,
+--         email,
+--         first_name
+--         last_name,
+--         gender,
+--         birth_date,
+--         address,
+--         password,
+--         profile_picture_path,
+--         created_at
+--     )
+-- VALUES(
+--     $1,
+--     $2,
+--     $3,
+--     $4,
+--     $5,
+--     $6,
+--     $7,
+--     $8,
+--     $9,
+--     $10
+-- )

@@ -66,19 +66,25 @@ Pour tester notre application en mode "développeur", vous aurez besoin :
 _Suivez bien les étapes de l'installation elle peut être fastidieuse_
 
 1. Inscrivez vous et procurez vous une clé API sur [OpenWeather](https://example.com) --> Current Weather Data --> Subscribe
+
 2. Clonez le repo
     ```sh
     git clone https://github.com/NickoMaill/Weather-App.git
     ```
-3. Installez les packages dans le dossier Back 
+3. Créez vous une base de donnée de type PostgreSQL a l'aide d'un hebergeur comme [Heroku](https://id.heroku.com/)
+
+4. Copier coller ensuite les ligne de commandes figurants dans le fichier Back/data/command.sql dans votre logiciel de gestion de base de donnée.
+
+5. Installez les packages dans le dossier Back 
     ```sh
     npm install
     ```
-4. Istallez les packages dans le dossier Front
+6. Istallez les packages dans le dossier Front
     ```sh
     npm install
     ```
-5. Dans le dossier Back, créez à la racine de ce dernier, un fichier `config.env` dans lequel nous allons stocké toutes nos variables d'environnements
+
+7. Dans le dossier Back, créez à la racine de ce dernier, un fichier `config.env` dans lequel nous allons stocké toutes nos variables d'environnements
     ```env
     PGHOST="l'adress serveur de votre base de donnée"
     PGDATABASE="le nom de votre base de donnée"
@@ -90,10 +96,11 @@ _Suivez bien les étapes de l'installation elle peut être fastidieuse_
     USER_MAIL="votre email"
     PASSWORD_MAIL="le mot de passe de votre email"
     ```
-    > :warning: **CES INFORMATIONS SONT SENSIBLES**, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elle ne risque rien 
+    > :warning: **CES INFORMATIONS SONT SENSIBLES**, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elles ne risquent rien 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+8. Ouvrez ensuite un terminal a la racine du dossier front et executer la commande `expo start` puis `yarn ios` pour lancer sur IOS, ou `yarn android` pour lancer sur android, ou enfin `yarn web` pour lancer sur votre navigateur (solution la plus compatible).
 
+> :white_check_mark: **FELICITATION** vous avez maintenant installé tout les outils dont vous avez besoin pour tester dette application en mode "développeur"
 <!-- USAGE EXAMPLES -->
 
 ## Usage
