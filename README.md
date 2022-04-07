@@ -85,12 +85,12 @@ _Suivez bien les étapes de l'installation elle peut être fastidieuse_
     PGUSER="le nom d''utilisateur"
     PGPORT="le port utilisé (pour PostgreSQL le port sera toujours à 5432)"
     PGPASSWORD="le mot de passe de votyre base de donnée"
-    SECRET="ici généré une "key" a l'aide d'un générateur comme [Encryption Key Generator](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx)"
+    SECRET="ici généré une "key" a l'aide d'un générateur comme Encryption Key Generator*"
     SERVICE_MAIL="le service d'email souhaitez"
     USER_MAIL="votre email"
     PASSWORD_MAIL="le mot de passe de votre email"
     ```
-    ces informations sont sensibles, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elle ne risque rien 
+    > :warning: **CES INFORMATIONS SONT SENSIBLES**, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elle ne risque rien 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
