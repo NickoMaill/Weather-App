@@ -1,7 +1,7 @@
 <div align="center">
     <img src="images/AppLogo.png" alt="Logo" width="80" height="80">
-    <h3 align="center">WeatherApp</h3>
-    <p align="center">une application simple pour vous donner la météo n'importe quand, n'importe où pour n'importe quelle ville</p>
+    <h1 align="center">WeatherApp</h1>
+    <p align="center">Une application simple pour vous donner la météo n'importe quand, n'importe où pour n'importe quelle ville</p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -65,19 +65,32 @@ Pour tester notre application en mode "développeur", vous aurez besoin :
 
 _Suivez bien les étapes de l'installation elle peut être fastidieuse_
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Inscrivez vous et procurez vous une clé API sur [OpenWeather](https://example.com) --> Current Weather Data --> Subscribe
+2. Clonez le repo
     ```sh
-    git clone https://github.com/your_username_/Project-Name.git
+    git clone https://github.com/NickoMaill/Weather-App.git
     ```
-3. Install NPM packages
+3. Installez les packages dans le dossier Back 
     ```sh
     npm install
     ```
-4. Enter your API in `config.js`
-    ```js
-    const API_KEY = "ENTER YOUR API";
+4. Istallez les packages dans le dossier Front
+    ```sh
+    npm install
     ```
+5. Dans le dossier Back, créez à la racine de ce dernier, un fichier `config.env` dans lequel nous allons stocké toutes nos variables d'environnements
+    ```env
+    PGHOST="l'adress serveur de votre base de donnée"
+    PGDATABASE="le nom de votre base de donnée"
+    PGUSER="le nom d''utilisateur"
+    PGPORT="le port utilisé (pour PostgreSQL le port sera toujours à 5432)
+    PGPASSWORD="le mot de passe de votyre base de donnée"
+    SECRET="ici généré une "key" a l'aide d'un générateur comme "[Encryption Key Generator](https://www.allkeysgenerator.com/Random/Security-Encryption-Key-Generator.aspx)
+    SERVICE_MAIL="le service d'email souhaitez"
+    USER_MAIL="votre email"
+    PASSWORD_MAIL="le mot de passe de votre email"
+    ```
+    ces informations sont sensibles, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elle ne risque rien 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
