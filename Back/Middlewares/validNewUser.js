@@ -1,8 +1,8 @@
 const Joi = require("joi");
 
 const newUser = Joi.object({
-	name: Joi.string().min(1).max(50).required(),
-	surname: Joi.string().min(1).max(50).required(),
+	firstName: Joi.string().min(1).max(50).required(),
+	lastName: Joi.string().min(1).max(50).required(),
 	gender: Joi.string().min(1).max(50),
 	birthDate: {
 		day: Joi.number().min(1).max(31).required(),
@@ -13,6 +13,8 @@ const newUser = Joi.object({
 		street: Joi.string().min(1).max(100).required(),
 		district: Joi.string().min(1).max(50).required(),
 		city: Joi.string().min(1).max(50).required(),
+		country: Joi.string().min(1).max(50).required(),
+
 	},
 	email: Joi.string()
 		.email({ minDomainSegments: 2, tlds: { allow: ["com", "net", "fr", "ru"] } })
