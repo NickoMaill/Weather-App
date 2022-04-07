@@ -96,11 +96,11 @@ _Suivez bien les étapes de l'installation elle peut être fastidieuse_
     USER_MAIL="votre email"
     PASSWORD_MAIL="le mot de passe de votre email"
     ```
-    > :warning: **CES INFORMATIONS SONT SENSIBLES**, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elles ne risquent rien 
+> :warning: **CES INFORMATIONS SONT SENSIBLES**, ne vous inquiétez pas, si vous avez bien suivis les instruction, dans ce fichier elles ne risquent rien 
 
 8. Ouvrez ensuite un terminal a la racine du dossier front et executer la commande `expo start` puis `yarn ios` pour lancer sur IOS, ou `yarn android` pour lancer sur android, ou enfin `yarn web` pour lancer sur votre navigateur (solution la plus compatible).
 
-> :white_check_mark: **FELICITATION** vous avez maintenant installé tout les outils dont vous avez besoin pour tester dette application en mode "développeur"
+:white_check_mark: **FELICITATION** vous avez maintenant installé tout les outils dont vous avez besoin pour tester dette application en mode "développeur"
 <!-- USAGE EXAMPLES -->
 
 ## Usage
