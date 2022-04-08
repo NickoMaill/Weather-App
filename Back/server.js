@@ -13,11 +13,13 @@ const cors = require("./middlewares/cors");
 
 //ROUTES IMPORT
 const user = require("./Routes/user");
+const verifyIp = require("./middlewares/verifyIp");
 
 
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors);
+app.use(verifyIp)
 app.use(cookieParser())
 app.use("/user", user);
 
