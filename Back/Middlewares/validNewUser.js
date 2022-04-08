@@ -38,21 +38,21 @@ async function validNewUser(req, res, next) {
 
 	Object.keys(body).map((key, _i) => {
 		if (body[key].toString().match(regex)) {
-			console.warn("detect");
+			console.warn("forbidden action was detected, IP Address will be blacklisted");
 			ip = req.ip;
 		}
 	});
 
 	Object.keys(body.birthDate).map((key, _i) => {
 		if (body.birthDate[key].match(regex)) {
-			console.warn("detect");
+			console.warn("forbidden action was detected, IP Address will be blacklisted");
 		}
 		ip = req.ip;
 	});
 
 	Object.keys(body.userAddress).map((key, _i) => {
 		if (body.userAddress[key].match(regex)) {
-			console.warn("detect");
+			console.warn("forbidden action was detected, IP Address will be blacklisted");
 		}
 		ip = req.ip;
 	});
