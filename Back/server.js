@@ -15,10 +15,8 @@ const cors = require("./middlewares/cors");
 
 //ROUTES IMPORT
 const user = require("./Routes/user");
-<<<<<<< HEAD
+
 const favorites = require("./Routes/favorites");
-=======
->>>>>>> 1d1f7709fc61f79942e7d291598bcb23ce229233
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
