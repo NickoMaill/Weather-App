@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 const dotenv = require("dotenv");
 dotenv.config({
-	path: "./config.env",
+  path: "./config.env",
 });
 const handlebars = require("express-handlebars");
 const path = require("path");
@@ -15,7 +15,10 @@ const cors = require("./middlewares/cors");
 
 //ROUTES IMPORT
 const user = require("./Routes/user");
+<<<<<<< HEAD
 const favorites = require("./Routes/favorites");
+=======
+>>>>>>> 1d1f7709fc61f79942e7d291598bcb23ce229233
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -30,11 +33,11 @@ app.use("/user", user);
 app.use("/favorites", favorites);
 
 app.get("/", (_req, res) => {
-	res.send("Bonjour");
+  res.send("Bonjour");
 });
 
 app.get("*", (_req, res) => {
-	res.status(404).send("Page not found");
+  res.status(404).send("Page not found");
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

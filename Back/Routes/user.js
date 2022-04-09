@@ -50,13 +50,23 @@ route.post("/register", validNewUser, userId, defaultImage, async (req, res) => 
 			]
 		);
 		mail.sendMail(req.body.email, req.body.firstName, req.body.lastName, token);
+<<<<<<< HEAD
 		res.sendStatus(201);
+=======
+		res.sendStatus(201)
+>>>>>>> 1d1f7709fc61f79942e7d291598bcb23ce229233
 	} catch (err) {
 		console.error(err);
 		return res.status(400);
 	}
 
 	console.log("user added");
+<<<<<<< HEAD
+=======
+	// res.json({
+	// 	message: "user added",
+	// });
+>>>>>>> 1d1f7709fc61f79942e7d291598bcb23ce229233
 });
 
 route.get("/confirm/:confirmationCode", async (req, res) => {
