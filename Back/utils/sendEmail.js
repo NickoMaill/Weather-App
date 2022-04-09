@@ -1,5 +1,12 @@
+//LIBRARY IMPORT
 const nodemailer = require("nodemailer");
-const {SERVICE_MAIL, USER_MAIL, PASSWORD_MAIL} = process.env
+const hbs = require("nodemailer-express-handlebars");
+const { dirname } = require("path");
+const path = require("path");
+
+//VARIABLE
+const { SERVICE_MAIL, USER_MAIL, PASSWORD_MAIL } = process.env;
+
 const transporter = nodemailer.createTransport({
   service: SERVICE_MAIL,
   auth: {
@@ -8,17 +15,28 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-function sendMail(to, firstName, lastName, token) {
+const hbsOption = {
+  viewEngine: {
+    partialDir: path.resolve(__dirname, "views/partials"),
+    layoutsDir: path.resolve(__dirname, "views/layouts"),
+  },
+  viewPath: path.resolve(__dirname, "views"),
+};
 
-    const mailInfo = {
-      from: USER_MAIL,
-      to: to,
-      subject: "Please confirm your mail address",
-      html: `<h1>Email Confirmation</h1>
-			<h2>Hello ${firstName} ${lastName}</h2>
-			<p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-      <a href="http://localhost:8000/user/confirm/${token}"> click here to confirm</a>`,
-    };
+transporter.use("compile", hbs(hbsOption));
+
+function sendMail(to, firstName, lastName, token) {
+  const mailInfo = {
+    from: USER_MAIL,
+    to: to,
+    subject: "Please confirm your mail address",
+    template: "confirmationEmail",
+    context: {
+      firstName: firstName,
+      lastName: lastName,
+      token: token,
+    },
+  };
 
   transporter.verify((err, success) => {
     if (err) {
@@ -41,7 +59,7 @@ function sendFinalEmail(to, firstName, lastName) {
     from: USER_MAIL,
     to: to,
     subject: "Welcome to WeatherApp",
-    html: `<h1>Welcome to CRManagement</h1>
+    html: `<h1>Welcome to WeatherApp</h1>
 			<h2>Hello ${firstName} ${lastName}</h2>
       <p>Welcome to the WeatherApp family, enjoy our service</p>`,
   };
@@ -64,4 +82,4 @@ function sendFinalEmail(to, firstName, lastName) {
 module.exports = {
   sendMail,
   sendFinalEmail,
-}
+};

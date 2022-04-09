@@ -25,9 +25,13 @@ const { SECRET } = process.env;
 //create new user
 route.post("/register", validNewUser, userId, defaultImage, async (req, res) => {
 	const hashedPassword = await bcrypt.hash(req.body.password, 12);
-	const token = jwt.sign({ email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName }, process.env.SECRET, {
-		expiresIn: "30m",
-	});
+	const token = jwt.sign(
+		{ email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName },
+		process.env.SECRET,
+		{
+			expiresIn: "30m",
+		}
+	);
 
 	try {
 		await Postgres.query(
@@ -46,28 +50,63 @@ route.post("/register", validNewUser, userId, defaultImage, async (req, res) => 
 			]
 		);
 		mail.sendMail(req.body.email, req.body.firstName, req.body.lastName, token);
+		res.sendStatus(201);
 	} catch (err) {
 		console.error(err);
 		return res.status(400);
 	}
 
 	console.log("user added");
-	res.json({
-		message: "user added",
-	});
 });
 
 route.get("/confirm/:confirmationCode", async (req, res) => {
-	const tokenDecode = jwt.verify(req.params.confirmationCode, SECRET);
-  console.log(tokenDecode);
+	const tokenDecode = jwt.verify(req.params.confirmationCode, SECRET, (err, decoded) => {
+		console.log("err", err);
+	});
 
 	try {
 		tokenDecode;
 		await Postgres.query("UPDATE users SET is_active = $1 WHERE users.email = $2", [true, tokenDecode.email]);
 		mail.sendFinalEmail(tokenDecode.email, tokenDecode.firstName, tokenDecode.lastName);
+		res.redirect("exp://192.168.0.16:19000");
 	} catch (err) {
+		console.log("catch");
 		console.error(err);
 		res.status(400);
+	}
+});
+
+route.post("/login", async (req, res) => {
+	const { email, password } = req.body;
+
+	try {
+		const user = await Postgres.query("SELECT * FROM users WHERE users.email = $1", [email]);
+		const isPasswordValid = await bcrypt.compare(password, user.rows[0].password);
+
+		if (user.rowCount < 1 || user.rowCount > 1) {
+			return res.status(400).json({
+				message: "Invalid email or password",
+			});
+		}
+
+		if (!isPasswordValid) {
+			return res.status(400).json({
+				message: "Invalid email or password",
+			});
+		}
+
+		if (user.rows[0].is_active === false) {
+			return res.sendStatus(403).redirect("");
+		}
+
+		const token = jwt.sign({ id: user.rows[0].user_id }, SECRET, {
+			expiresIn: "10s",
+		});
+
+		res.cookie("userCookie", token, { httpOnly: true, secure: false }).sendStatus(202);
+	} catch (err) {
+		console.error(err);
+		res.sendStatus(400);
 	}
 });
 

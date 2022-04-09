@@ -24,37 +24,38 @@ const newUser = Joi.object({
 		.max(50)
 		.required(),
 	password: Joi.string()
-		.min(1)
+		.min(8)
 		.max(1000)
 		.required()
 		.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/),
 });
 
-async function validNewUser(req, res, next) {
+function validNewUser(req, res, next) {
+
 	const validation = newUser.validate(req.body);
 	const body = req.body;
 	const regex = /<script[\s\S]*?>[\s\S]*?<\/script>/;
-	let ip;
+
 
 	Object.keys(body).map((key, _i) => {
 		if (body[key].toString().match(regex)) {
-			console.warn("forbidden action was detected, IP Address will be blacklisted");
-			ip = req.ip;
+			console.warn("script injection detected")
+			return res.sendStatus(403);
 		}
 	});
-
+	
 	Object.keys(body.birthDate).map((key, _i) => {
 		if (body.birthDate[key].match(regex)) {
-			console.warn("forbidden action was detected, IP Address will be blacklisted");
+			console.warn("script injection detected")
+			return res.sendStatus(403);
 		}
-		ip = req.ip;
-	});
+	})
 
 	Object.keys(body.userAddress).map((key, _i) => {
 		if (body.userAddress[key].match(regex)) {
-			console.warn("forbidden action was detected, IP Address will be blacklisted");
+			console.warn("script injection detected")
+			return res.sendStatus(403);
 		}
-		ip = req.ip;
 	});
 
 	if (validation.error) {
@@ -62,15 +63,6 @@ async function validNewUser(req, res, next) {
 			message: "Error 400",
 			description: validation.error.details[0].message,
 		});
-	}
-
-	try {
-		if (ip) {
-			await Postgres.query("INSERT INTO ip_blacklist(ip_adresse, date) VALUES ($1, $2)", [req.ip, currentDate()]);
-			return res.sendStatus(403);
-		}
-	} catch (err) {
-		res.sendStatus(400);
 	}
 	next();
 }
