@@ -46,6 +46,16 @@ route.post("/favorites/add", async (req, res) => {
 	}
 });
 
+route.delete("/favorites/delete", async (req, res) => {
+	try {
+		await Postgres.query("DELETE FROM favorites WHERE favorites.favorite_id = $1 AND favorites.user_id = $2", [req.body.cityID, req.id]);
+		res.sendStatus(200);
+	} catch (err) {
+		console.error(err);
+		res.status(400);
+	}
+})
+
 route.put("/favorites/default", async (req, res) => {
 	try {
 		await Postgres.query("UPDATE users SET weather_default = $1 WHERE user_id = $2", [req.body.cityID, req.id])
