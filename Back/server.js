@@ -17,6 +17,7 @@ const cors = require("./middlewares/cors");
 const user = require("./Routes/user");
 
 const weather = require("./Routes/weather");
+const limiter = require("./utils/limiter");
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -26,6 +27,7 @@ app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors);
+app.use(limiter)
 app.use(cookieParser());
 app.use("/user", user);
 app.use("/weather", weather);
