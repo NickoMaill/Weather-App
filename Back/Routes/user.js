@@ -19,6 +19,7 @@ const verifyFile = require("../middlewares/verifyFile");
 //FUNCTION IMPORT
 const currentDate = require("../utils/getCurrentDate");
 const mail = require("../utils/sendEmail");
+const verifyToken = require("../Middlewares/verifyToken");
 
 const { SECRET } = process.env;
 
@@ -50,23 +51,13 @@ route.post("/register", validNewUser, userId, defaultImage, async (req, res) => 
 			]
 		);
 		mail.sendMail(req.body.email, req.body.firstName, req.body.lastName, token);
-<<<<<<< HEAD
 		res.sendStatus(201);
-=======
-		res.sendStatus(201)
->>>>>>> 1d1f7709fc61f79942e7d291598bcb23ce229233
 	} catch (err) {
 		console.error(err);
 		return res.status(400);
 	}
 
 	console.log("user added");
-<<<<<<< HEAD
-=======
-	// res.json({
-	// 	message: "user added",
-	// });
->>>>>>> 1d1f7709fc61f79942e7d291598bcb23ce229233
 });
 
 route.get("/confirm/:confirmationCode", async (req, res) => {
@@ -110,7 +101,7 @@ route.post("/login", async (req, res) => {
 		}
 
 		const token = jwt.sign({ id: user.rows[0].user_id }, SECRET, {
-			expiresIn: "10s",
+			expiresIn: "15d",
 		});
 
 		res.cookie("userCookie", token, { httpOnly: true, secure: false }).sendStatus(202);
@@ -120,28 +111,29 @@ route.post("/login", async (req, res) => {
 	}
 });
 
-route.post("/profile-picture/:id", upload.single("image"), verifyFile, async (req, res) => {
+route.put("/profile-picture", upload.single("image"), verifyToken, verifyFile, async (req, res) => {
 	let type = path.extname(req.file.originalname);
-	let user = await Postgres.query("SELECT * FROM users WHERE users.id=$1", [req.params.id]);
-	let fileName = `${user.rows[0].surname}-${user.rows[0].surname}-${currentDate("file")}${type}`;
+	let user = await Postgres.query("SELECT * FROM users WHERE users.user_id=$1", [req.id]);
+	let fileName = `${user.rows[0].last_name}-${user.rows[0].first_name}-${currentDate("file")}${type}`;
 
-	let updateProfilePicture = await Postgres.query("UPDATE users SET profile_picture = $1 WHERE user_id= $2", [
-		`${req.file.destination}/${fileName}`,
-		req.params.id,
-	]);
+	let updateProfilePicture = await Postgres.query(
+		"UPDATE users SET profile_picture_path = $1 WHERE users.user_id= $2",
+		[`${req.file.destination}/${fileName}`, req.id]
+	);
 
 	try {
 		updateProfilePicture;
 	} catch (err) {
-		console.error(err);
+		console.error("test", err);
 		res.status(400);
 	}
 
 	fs.renameSync(req.file.path, path.join(req.file.destination, `${fileName}`));
-	console.log(req.file.destination);
-	res.json({
-		message: "profile picture updated!",
-	});
+	res.sendStatus(202);
 });
+
+route.get("/logout", (req, res) => {
+	res.status(202).clearCookie("userCookie")
+})
 
 module.exports = route;

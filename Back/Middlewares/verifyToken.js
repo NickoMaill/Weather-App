@@ -14,7 +14,7 @@ function verifyToken(req, res, next) {
 		}
 
 		if (decode !== undefined) {
-			req.id = decode.id;
+			return req.id = decode.id;
 		}
 	});
 
