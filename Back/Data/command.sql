@@ -6,12 +6,11 @@ CREATE TABLE users (
     gender VARCHAR(50),
     birth_date JSON NOT NULL,
     address JSON NOT NULL,
-    favorites INTEGER[],
     default_weather INTEGER,
     password VARCHAR(1000) NOT NULL,
     profile_picture_path VARCHAR(200) NOT NULL,
-    confirmation_code VARCHAR(300),
 	created_at JSON NOT NULL
+    CONSTRAINT fk_default_weather FOREIGN KEY (default_weather) REFERENCES favorites(user_id)
 );
 
 CREATE TABLE request_history(
@@ -33,28 +32,3 @@ CREATE TABLE search_history(
 
 SELECT * FROM users;
 -- SELECT * FROM users WHERE users.birth_date ->>'year' = '1976';
-
--- INSERT INTO users(
---         user_id,
---         email,
---         first_name
---         last_name,
---         gender,
---         birth_date,
---         address,
---         password,
---         profile_picture_path,
---         created_at
---     )
--- VALUES(
---     $1,
---     $2,
---     $3,
---     $4,
---     $5,
---     $6,
---     $7,
---     $8,
---     $9,
---     $10
--- )
