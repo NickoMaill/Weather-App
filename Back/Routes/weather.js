@@ -15,10 +15,26 @@ route.get("/search/:cityName", async (req, res) => {
 	res.status(200).json(data);
 });
 
-route.get("/", async (req, res) => {
-	const userFavorite = await Postgres.query("SELECT * FROM favorites");
+route.get("/favorites", async (req, res) => {
+	const userFavorite = await Postgres.query("SELECT favorite_id FROM favorites WHERE favorites.user_id = $1", [req.id]);
+
+	try {
+		userFavorite;
+		res.json(userFavorite.rows);
+	} catch (err) {
+		console.error(err);
+		res.status(400);
+	}
 });
 
-route.post("/add-favorite", async (req, res) => {});
+route.post("/favorites/add", async (req, res) => {
+	try {
+		await Postgres.query("INSERT INTO favorites(favorite_id, user_id) VALUES($1, $2)", [req.body.cityID, req.id]);
+		res.sendStatus(201)
+	} catch (err) {
+		console.error(err);
+		res.status(400);
+	}
+});
 
 module.exports = route;

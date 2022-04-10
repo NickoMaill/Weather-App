@@ -3,6 +3,7 @@ const express = require("express");
 const route = express.Router();
 const { Pool } = require("pg");
 const Postgres = new Pool({ ssl: { rejectUnauthorized: false } });
+const uniqID = require("uniqid");
 const multer = require("multer");
 const upload = multer({ dest: "public/uploads" });
 const fs = require("fs");
@@ -13,18 +14,18 @@ const jwt = require("jsonwebtoken");
 //MIDDLEWARES IMPORT
 const validNewUser = require("../middlewares/validNewUser");
 const defaultImage = require("../middlewares/defaultImage");
-const userId = require("../middlewares/newUserId");
 const verifyFile = require("../middlewares/verifyFile");
 
 //FUNCTION IMPORT
 const currentDate = require("../utils/getCurrentDate");
 const mail = require("../utils/sendEmail");
 const verifyToken = require("../Middlewares/verifyToken");
+const { resolveSoa } = require("dns");
 
 const { SECRET } = process.env;
 
 //create new user
-route.post("/register", validNewUser, userId, defaultImage, async (req, res) => {
+route.post("/register", validNewUser, defaultImage, async (req, res) => {
 	const hashedPassword = await bcrypt.hash(req.body.password, 12);
 	const token = jwt.sign(
 		{ email: req.body.email, firstName: req.body.firstName, lastName: req.body.lastName },
@@ -38,7 +39,7 @@ route.post("/register", validNewUser, userId, defaultImage, async (req, res) => 
 		await Postgres.query(
 			"INSERT INTO users(user_id, email, first_name, last_name, gender, birth_date, address, password, profile_picture_path, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
 			[
-				req.newId,
+				uniqID(),
 				req.body.email,
 				req.body.firstName,
 				req.body.lastName,
@@ -53,7 +54,10 @@ route.post("/register", validNewUser, userId, defaultImage, async (req, res) => 
 		mail.sendMail(req.body.email, req.body.firstName, req.body.lastName, token);
 		res.sendStatus(201);
 	} catch (err) {
-		console.error(err);
+		
+		if (err.code === "23505") {
+			res.status(400).json({ error: "email already used" });
+		}
 		return res.status(400);
 	}
 
@@ -124,7 +128,7 @@ route.put("/profile-picture", upload.single("image"), verifyToken, verifyFile, a
 	try {
 		updateProfilePicture;
 	} catch (err) {
-		console.error("test", err);
+		console.error(err);
 		res.status(400);
 	}
 
@@ -133,7 +137,7 @@ route.put("/profile-picture", upload.single("image"), verifyToken, verifyFile, a
 });
 
 route.get("/logout", (req, res) => {
-	res.status(202).clearCookie("userCookie")
-})
+	res.status(202).clearCookie("userCookie");
+});
 
 module.exports = route;
