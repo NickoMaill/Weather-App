@@ -16,7 +16,7 @@ const cors = require("./middlewares/cors");
 //ROUTES IMPORT
 const user = require("./Routes/user");
 
-const favorites = require("./Routes/favorites");
+const weather = require("./Routes/weather");
 
 app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors);
 app.use(cookieParser());
 app.use("/user", user);
-app.use("/favorites", favorites);
+app.use("/weather", weather);
 
 app.get("/", (_req, res) => {
   res.send("Bonjour");
