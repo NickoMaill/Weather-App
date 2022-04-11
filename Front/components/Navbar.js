@@ -17,7 +17,7 @@ export default function Navbar() {
 					</TouchableOpacity>
 				</View>
 				<View>
-					<TouchableOpacity onPress={() => navigate("/settings")}>
+					<TouchableOpacity onPress={() => navigate("/register")}>
 						<Image source={require("../assets/settings.png")} />
 					</TouchableOpacity>
 				</View>

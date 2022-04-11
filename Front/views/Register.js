@@ -1,11 +1,14 @@
 import { SafeAreaView, View, Text } from "react-native";
+import Title from "../components/Title";
 
 export default function Register() {
   
   return (
     <SafeAreaView>
         <View>
-            <Text>inscription</Text>
+            <View>
+              <Title>Bienvenu</Title>
+            </View>
         </View>
     </SafeAreaView>
   )

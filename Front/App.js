@@ -17,18 +17,16 @@ export default function App() {
 	};
 	return (
 		<Context.Provider value={value}>
-			<ImageBackground source={require("./assets/background.jpeg")} resizeMode="cover" style={styles.image}>
 				<NativeRouter>
 					<Routes>
 						<Route exact path="/login" element={<Login />} />
 						<Route exact path="/homepage" element={<Homepage />} />
 						<Route exact path="/favorites" element={<Favorites />} />
 						<Route exact path="/" element={<Register />} />
-						<Route exact path="/settings" element={<Settings />} />
+						<Route exact path="/register" element={<Register/>} />
 					</Routes>
 					{!isLogged && <Navbar />}
 				</NativeRouter>
-			</ImageBackground>
 		</Context.Provider>
 	);
 }
