@@ -1,6 +1,7 @@
 import { SafeAreaView, View, Text } from "react-native";
 
 export default function Register() {
+  
   return (
     <SafeAreaView>
         <View>

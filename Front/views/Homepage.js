@@ -1,11 +1,10 @@
-import { Text } from "react-native";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, StyleSheet, Text } from "react-native";
 
 export default function Homepage() {
 
 	return (
 		<>
-			<SafeAreaView>
+			<SafeAreaView style={styles.mainContainer}>
 				<View>
 					<Text>Accueil</Text>
 				</View>
@@ -13,3 +12,10 @@ export default function Homepage() {
 		</>
 	);
 }
+
+const styles = StyleSheet.create({
+	mainContainer: {
+    position: "absolute",
+		top: 0,
+	},
+});
