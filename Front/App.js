@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { NativeRouter, Route, Routes } from "react-router-native";
+import Navbar from "./components/Navbar";
 import Favorites from "./views/Favorites";
 import Homepage from "./views/Homepage";
 import Login from "./views/Login";
@@ -15,8 +16,8 @@ export default function App() {
 				<Route exact path="/favorites" element={<Favorites />} />
 				<Route exact path="/register" element={<Register />} />
 			</Routes>
+			<Navbar />
 		</NativeRouter>
-    
 	);
 }
 

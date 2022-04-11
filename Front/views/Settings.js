@@ -1,13 +1,10 @@
-import { Text } from "react-native";
 import { SafeAreaView, View } from "react-native";
 
-export default function Homepage() {
+export default function Settings() {
 	return (
 		<>
 			<SafeAreaView>
-				<View>
-					<Text></Text>
-				</View>
+				<View></View>
 			</SafeAreaView>
 		</>
 	);

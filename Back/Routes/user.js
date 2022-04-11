@@ -20,7 +20,6 @@ const verifyFile = require("../middlewares/verifyFile");
 const currentDate = require("../utils/getCurrentDate");
 const mail = require("../utils/sendEmail");
 const verifyToken = require("../Middlewares/verifyToken");
-const { resolveSoa } = require("dns");
 
 const { SECRET } = process.env;
 
