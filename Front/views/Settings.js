@@ -1,10 +1,12 @@
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 
 export default function Settings() {
 	return (
 		<>
 			<SafeAreaView>
-				<View></View>
+				<View>
+                    <Text>Paramètres</Text>
+                </View>
 			</SafeAreaView>
 		</>
 	);
