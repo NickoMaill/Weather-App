@@ -13,12 +13,12 @@ export default function Navbar() {
 				</View>
 				<View>
 					<TouchableOpacity onPress={() => navigate("/homepage")}>
-						<Image source={require("../assets/rainy-day.png")} />
+						<Image style={styles.navBarIcon} source={require("../assets/rainy-day.png")} />
 					</TouchableOpacity>
 				</View>
 				<View>
 					<TouchableOpacity onPress={() => navigate("/register")}>
-						<Image source={require("../assets/settings.png")} />
+						<Image style={styles.navBarIcon} source={require("../assets/settings.png")} />
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -28,12 +28,17 @@ export default function Navbar() {
 
 const styles = StyleSheet.create({
 	container: {
+		// position: "relative",
+		height: 50,
 		flexDirection: "row",
-		padding: 25,
-		position: "absolute",
+		padding: 15,
 		bottom: 0,
 		width: "100%",
 		justifyContent: "space-around",
 		backgroundColor: "#e27cff",
 	},
+	navBarIcon:{
+		width:20,
+		height:20
+	}
 });

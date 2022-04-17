@@ -5,11 +5,11 @@ export default function DatePicker(props) {
 	return (
 		<>
 			<View>
-				<Text>{props.children}</Text>
+				<Text style={{ textAlign: "center" }}>{props.children}</Text>
 				<Picker
 					selectedValue={props.selectedValue}
 					onValueChange={props.onValueChange}
-					style={{ height: 50, width: 100, marginHorizontal: 10 }}
+					style={{ height: 50, width: 100 }}
 				>
 					{props.data.map((item, i) => (
 						<Picker.Item key={i} label={item} value={item} />
